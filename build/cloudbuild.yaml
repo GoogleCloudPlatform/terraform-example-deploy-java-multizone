@@ -1,0 +1,53 @@
+steps:
+  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
+    dir: 'backend/config'
+    args:
+      - init
+      - .
+
+  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
+    dir: 'backend/config'
+    args:
+      - build
+      - -var
+      - project_id=$PROJECT_ID
+      - -var
+      - region=$LOCATION
+      - -var
+      - zone_code=a
+      - -var
+      - xwiki_img_name=us-west1-xwiki-01t-img-$BUILD_ID
+      - -var
+      - img_desc=XWiki image from Packer which trigger by cloudbuild
+      - -var
+      - file_sources_tcp=./tcp_gcp.xml
+      - -var
+      - file_sources_hibernate=./hibernate_gcp.cfg.xml
+      - -var
+      - file_sources_startup_sh=../tools/xwiki_startup.sh
+      - -var
+      - deploy_sh=../tools/xwiki_manual_deploy_gcp.sh
+      - .
+
+  - name: "hashicorp/terraform"
+    dir: "xwiki-cloudbuild-gce"
+    args:
+      - init
+
+  - name: "hashicorp/terraform"
+    dir: "xwiki-cloudbuild-gce"
+    args:
+      - apply
+      - -var
+      - project_id=$PROJECT_ID
+      - -var
+      - region=$LOCATION
+      - -var
+      - xwiki_img_name=us-west1-xwiki-01t-img-$BUILD_ID
+      - -var
+      - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
+      - -var-file=terraform.tfvars
+      - -auto-approve
+
+options:
+  logging: CLOUD_LOGGING_ONLY

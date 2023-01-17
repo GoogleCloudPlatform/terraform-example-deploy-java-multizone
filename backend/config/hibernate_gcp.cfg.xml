@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+
+    <!-- Please refer to the installation guide on
+         https://www.xwiki.org/xwiki/bin/view/Documentation/AdminGuide/Installation/ for configuring your database.
+         You'll need to do 2 things:
+         1) Copy your database driver JAR in WEB-INF/lib or in some shared lib directory
+         2) Uncomment the properties below for your specific DB (and comment the default
+            database configuration if it doesn't match your DB)
+    -->
+
+    <!-- Generic parameters common to all Databases -->
+
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.use_outer_join">true</property>
+
+    <!-- Without it, some queries fail in MS SQL. XWiki doesn't need scrollable result sets, anyway. -->
+    <property name="hibernate.jdbc.use_scrollable_resultset">false</property>
+
+    <!-- DBCP Connection Pooling configuration. Only some properties are shown. All available properties can be found
+         at https://commons.apache.org/proper/commons-dbcp/configuration.html
+    -->
+    <property name="hibernate.dbcp.defaultAutoCommit">false</property>
+    <property name="hibernate.dbcp.maxTotal">50</property>
+    <property name="hibernate.dbcp.maxIdle">5</property>
+    <property name="hibernate.dbcp.maxWaitMillis">30000</property>
+
+    <!-- Enable JMX monitoring for DBCP -->
+    <property name="hibernate.dbcp.jmxName">org.apache.dbcp:DataSource=dbcp</property>
+
+    <!-- Tell Hibernate to use XWiki's custom DBCP Connection Provider so that the DBCP pool is used -->
+    <property name="hibernate.connection.provider_class">com.xpn.xwiki.store.DBCPConnectionProvider</property>
+
+    <!--
+      Keep the old behavior. The new version of hibernate tries to delete and recreate unique
+      constraints when updating the database schema. The problem is that an exception is thrown
+      when the constraint to be deleted does not exists, which is the case with a new XWiki
+      instance.
+      See https://hibernate.atlassian.net/browse/HHH-8162
+    -->
+    <property name="hibernate.schema_update.unique_constraint_strategy">skip</property>
+
+    <!-- Configuration for the default database.
+         Comment out this section and uncomment other sections below if you want to use another database.
+         Note that the database tables will be created automatically if they don't already exist.
+
+         If you want the main wiki database to be different than "xwiki" (or the default schema for schema based
+         engines) you will also have to set the property xwiki.db in xwiki.cfg file
+    -->
+    <property name="hibernate.connection.url">jdbc:mysql://xwiki-sql-db/xwiki?useSSL=false&amp;connectionTimeZone=LOCAL&amp;allowPublicKeyRetrieval=true</property>
+    <property name="hibernate.connection.username">xwiki</property>
+    <property name="hibernate.connection.password">xwiki</property>
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.dbcp.poolPreparedStatements">true</property>
+    <property name="hibernate.dbcp.maxOpenPreparedStatements">20</property>
+
+    <property name="hibernate.connection.charSet">UTF-8</property>
+    <property name="hibernate.connection.useUnicode">true</property>
+    <property name="hibernate.connection.characterEncoding">utf8</property>
+
+    <mapping resource="xwiki.hbm.xml"/>
+    <mapping resource="feeds.hbm.xml"/>
+    <mapping resource="instance.hbm.xml"/>
+    <mapping resource="notification-filter-preferences.hbm.xml"/>
+    <mapping resource="mailsender.hbm.xml"/>
+
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,5 @@
+#! /bin/bash
+
+sudo echo "${xwiki_01_private_ip} tf-init-deploy-basic-1" >> /etc/hosts
+sudo echo "${xwiki_02_private_ip} tf-init-deploy-basic-2" >> /etc/hosts
+bash /home/xwiki_startup.sh ${db_ip} ${file_store_ip}
