@@ -1,5 +1,4 @@
-project_id           = "migrate-legacy-java-app-gce"
-project_number       = "580349825487"
-region               = "us-west1"
-repository_name      = "xwiki-gce"
-service_account_name = "cloudbuild-xwiki-gce"
+project_id      = ${PROJECT_ID}
+project_number  = ${PROJECT_NUMBER}
+region          = "us-west1"
+repository_name = "xwiki-gce"
