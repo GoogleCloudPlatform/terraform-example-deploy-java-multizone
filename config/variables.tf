@@ -10,7 +10,7 @@ variable "region" {
 
 variable "xwiki_img_name" {
   description = "Name of Xwiki image build by Packer."
-  type = string
+  type        = string
 }
 
 variable "availability_type" {

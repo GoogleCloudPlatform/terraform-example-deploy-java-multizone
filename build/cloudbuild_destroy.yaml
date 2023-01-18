@@ -1,11 +1,11 @@
 steps:
   - name: "hashicorp/terraform"
-    dir: "xwiki-cloudbuild-gce"
+    dir: "config"
     args:
       - init
 
   - name: "hashicorp/terraform"
-    dir: "xwiki-cloudbuild-gce"
+    dir: "config"
     args:
       - destroy
       - -var

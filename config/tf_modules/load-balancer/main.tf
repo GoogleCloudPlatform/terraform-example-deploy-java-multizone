@@ -100,7 +100,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
   locality_lb_policy = "RING_HASH"
   session_affinity = "CLIENT_IP"
   consistent_hash {
-    minimum_ring_size = 1
+    minimum_ring_size = 1024
   }
   health_checks = [
     module.img.health_check_self_links[0],

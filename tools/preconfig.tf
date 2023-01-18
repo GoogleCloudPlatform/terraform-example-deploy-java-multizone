@@ -30,10 +30,10 @@ module "xwiki" {
     module.project_services
   ]
 
-  source          = "./modules/source-repository"
-  project_id      = var.project_id
-  region          = var.region
-  repository_name = "${var.repository_name}"
+  source               = "./modules/source-repository"
+  project_id           = var.project_id
+  region               = var.region
+  repository_name      = var.repository_name
   service_account_name = var.service_account_name
 }
 

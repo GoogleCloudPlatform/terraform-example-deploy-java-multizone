@@ -11,15 +11,15 @@ variable "project_number" {
 variable "region" {
   description = "GCP region"
   type        = string
-  default = "us-west1"
+  default     = "us-west1"
 }
 
 variable "repository_name" {
-  type = string
+  type    = string
   default = "xwiki-gce"
 }
 
 variable "service_account_name" {
-  type = string
+  type    = string
   default = "cloudbuild-xwiki-gce"
 }

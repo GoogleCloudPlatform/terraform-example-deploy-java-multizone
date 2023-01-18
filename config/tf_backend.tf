@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "${backend-bucket-name}"
+    bucket = "tf-backend-xwiki-gce-580349825487"
     prefix = "xwiki-cloudbuild-gce"
   }
 }

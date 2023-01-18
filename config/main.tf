@@ -14,7 +14,7 @@ module "project_services" {
 }
 
 module "networking" {
-  source = "tf_modules/networking"
+  source = "./tf_modules/networking"
 
   project_id             = var.project_id
   region                 = var.region
@@ -23,7 +23,7 @@ module "networking" {
 }
 
 module "database" {
-  source = "tf_modules/database"
+  source = "./tf_modules/database"
 
   project_id        = var.project_id
   region            = var.region
@@ -31,13 +31,13 @@ module "database" {
 }
 
 module "file_store" {
-  source = "tf_modules/file-store"
+  source = "./tf_modules/file-store"
 
   region = var.region
 }
 
 module "vm" {
-  source = "tf_modules/vm"
+  source = "./tf_modules/vm"
 
   region       = var.region
   project_id   = var.project_id
@@ -65,7 +65,7 @@ module "vm" {
 }
 
 module "load_balancer" {
-  source = "tf_modules/load-balancer"
+  source = "./tf_modules/load-balancer"
 
   vm1        = module.vm.instance1
   vm2        = module.vm.instance2
