@@ -16,24 +16,21 @@ module "project_services" {
   ]
 }
 
-resource "random_id" "random" {
-  byte_length = 4
-}
-
 resource "google_storage_bucket" "infra_state" {
   name     = "tf-backend-xwiki-gce-${var.project_number}"
   location = "US"
 }
 
-module "xwiki" {
+module "pre_config" {
   depends_on = [
     module.project_services
   ]
 
-  source               = "./modules/source-repository"
-  project_id           = var.project_id
-  region               = var.region
-  repository_name      = var.repository_name
-  service_account_name = var.service_account_name
+  source          = "./modules/source-repository"
+  project_id      = var.project_id
+  region          = var.region
+  repository_name = var.repository_name
 }
 
+data "google_project" "project" {
+}

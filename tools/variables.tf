@@ -18,8 +18,3 @@ variable "repository_name" {
   type    = string
   default = "xwiki-gce"
 }
-
-variable "service_account_name" {
-  type    = string
-  default = "cloudbuild-xwiki-gce"
-}
