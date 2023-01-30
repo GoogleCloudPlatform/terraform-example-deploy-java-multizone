@@ -1,4 +1,9 @@
 steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    dir: 'tools'
+    entrypoint: 'bash'
+    args: ['prepare_tf_backend.sh', '${PROJECT_ID}']
+
   - name: "hashicorp/terraform"
     dir: "config"
     args:
