@@ -8,6 +8,27 @@ variable "region" {
   type        = string
 }
 
+variable "zone_code1" {
+  description = "The zone-code is used to instance 01, it depends on the region. ex: a"
+  type        = string
+  default     = "a"
+}
+
+variable "zone_code2" {
+  description = "The zone-code is used to instance 02, it depends on the region. ex: b"
+  type        = string
+  default     = "b"
+}
+
+#variable "locations" {
+#  description = "The location contains region, zone_codes(at least two zone codes), zone code depend on the region."
+#  type = list(object({
+#    region     = string
+#    zone_codes = list(string)
+#    }
+#  ))
+#}
+
 variable "xwiki_img_name" {
   description = "Name of Xwiki image build by Packer."
   type        = string
@@ -30,4 +51,16 @@ variable "vm_sa_email" {
 variable "firewall_source_ranges" {
   description = "The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format."
   type        = list(string)
+}
+
+variable "datadog_api_key" {
+  description = "Datadog API Key used to create resources."
+  type        = string
+  sensitive   = true
+}
+
+variable "datadog_app_key" {
+  description = "Datadog App Key."
+  type        = string
+  sensitive   = true
 }

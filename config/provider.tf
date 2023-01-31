@@ -1,11 +1,12 @@
 terraform {
   required_providers {
     google = {
-      version = "4.37.0"
     }
     random = {
-      source  = "hashicorp/random"
-      version = "3.4.3"
+      source = "hashicorp/random"
+    }
+    datadog = {
+      source = "DataDog/datadog"
     }
   }
 }
@@ -13,4 +14,9 @@ terraform {
 provider "google" {
   project = var.project_id
   region  = var.region
+}
+
+provider "datadog" {
+  api_key = var.datadog_api_key
+  app_key = var.datadog_app_key
 }

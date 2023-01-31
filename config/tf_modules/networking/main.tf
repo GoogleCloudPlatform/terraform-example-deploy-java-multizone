@@ -20,19 +20,6 @@ module "global_addresses" {
   ]
 }
 
-module "xwiki_internal_addresses" { // module default is INTERNAL.
-  source  = "terraform-google-modules/address/google"
-  version = "3.1.1"
-
-  project_id = var.project_id
-  region     = var.region
-  names = [
-    "g-${var.region}-${var.zone_code1}-xwiki-01t-internal-static-ip",
-    "g-${var.region}-${var.zone_code2}-xwiki-02t-internal-static-ip",
-  ]
-  addresses = var.internal_addresses
-}
-
 resource "google_compute_firewall" "rules" {
   name    = "xwiki-${var.region}-fw-http-8080"
   network = "default"
