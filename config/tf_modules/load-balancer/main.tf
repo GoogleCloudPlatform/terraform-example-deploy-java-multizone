@@ -98,7 +98,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
     max_utilization = 0.8
   }
   locality_lb_policy = "RING_HASH"
-  session_affinity = "CLIENT_IP"
+  session_affinity   = "CLIENT_IP"
   consistent_hash {
     minimum_ring_size = 1024
   }

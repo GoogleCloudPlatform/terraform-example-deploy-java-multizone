@@ -10,6 +10,7 @@ module "project_services" {
     "servicenetworking.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sqladmin.googleapis.com",
+    "cloudbuild.googleapis.com",
   ]
 }
 
@@ -36,12 +37,19 @@ module "file_store" {
   region = var.region
 }
 
+data "google_service_account" "cloudbuild_service_account" {
+  account_id = "cloudbuild-xwiki-gce"
+}
+
+resource "google_storage_hmac_key" "key" {
+  service_account_email = data.google_service_account.cloudbuild_service_account.email
+}
+
 module "vm" {
   source = "./tf_modules/vm"
 
-  region       = var.region
-  project_id   = var.project_id
-  internal_ips = module.networking.internal_ips
+  region     = var.region
+  project_id = var.project_id
   service_account = {
     email = "${var.vm_sa_email}"
     scopes = [
@@ -56,12 +64,12 @@ module "vm" {
   startup_script = templatefile(
     "${path.module}/../tools/startup_script.tftpl",
     {
-      db_ip               = "${module.database.db_ip}",
-      file_store_ip       = "${module.file_store.file_store_ip}",
-      xwiki_01_private_ip = "${module.networking.internal_ips[0]}",
-      xwiki_02_private_ip = "${module.networking.internal_ips[1]}"
+      db_ip         = "${module.database.db_ip}",
+      file_store_ip = "${module.file_store.file_store_ip}",
     }
   )
+  jgroup_bucket_access_key = google_storage_hmac_key.key.access_id
+  jgroup_bucket_secret_key = google_storage_hmac_key.key.secret
 }
 
 module "load_balancer" {

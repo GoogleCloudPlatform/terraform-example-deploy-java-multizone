@@ -1,5 +1,7 @@
 #! /bin/bash
 
-sudo echo "${xwiki_01_private_ip} tf-init-deploy-basic-1" >> /etc/hosts
-sudo echo "${xwiki_02_private_ip} tf-init-deploy-basic-2" >> /etc/hosts
+sed -i "s/$(echo JGROUP_BUCKET | sed -e 's/\([[\/.*]\|\]\)/\\&/g')/$(echo ${jgroup_bucket_name} | sed -e 's/[\/&]/\\&/g')/g" /usr/lib/xwiki/WEB-INF/observation/remote/jgroups/tcp.xml
+sed -i "s/$(echo ACCESS_KEY | sed -e 's/\([[\/.*]\|\]\)/\\&/g')/$(echo $jgroup_bucket_access_key | sed -e 's/[\/&]/\\&/g')/g" /usr/lib/xwiki/WEB-INF/observation/remote/jgroups/tcp.xml
+sed -i "s/$(echo SECRET_KEY | sed -e 's/\([[\/.*]\|\]\)/\\&/g')/$(echo $jgroup_bucket_secret_key | sed -e 's/[\/&]/\\&/g')/g" /usr/lib/xwiki/WEB-INF/observation/remote/jgroups/tcp.xml
+
 bash /home/xwiki_startup.sh ${db_ip} ${file_store_ip}

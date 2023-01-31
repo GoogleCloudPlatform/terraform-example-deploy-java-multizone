@@ -19,10 +19,6 @@ variable "project_id" {
   description = "The project ID will be created the vm in. ex: datadogtest-367504"
   type        = string
 }
-variable "internal_ips" {
-  description = "The private IP address to assign to the instance. If empty, the address will be automatically assigned."
-  type        = list(string)
-}
 
 variable "service_account" {
   description = "Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles."
@@ -36,4 +32,12 @@ variable "startup_script" {
   description = "User startup script to run when instances spin up"
   type        = any
   default     = ""
+}
+
+variable "jgroup_bucket_access_key" {
+  type = string
+}
+
+variable "jgroup_bucket_secret_key" {
+  type = string
 }

@@ -24,7 +24,6 @@ resource "google_compute_instance" "xwiki_01t" {
       //Access configurations, i.e. IPs via which this instance can be accessed via the Internet. 
       //Omit to ensure that the instance is not accessible from the Internet.
     }
-    network_ip = var.internal_ips[0]
   }
   service_account {
     email  = var.service_account.email
@@ -32,6 +31,10 @@ resource "google_compute_instance" "xwiki_01t" {
   }
 
   metadata_startup_script = var.startup_script
+  metadata = {
+    jgroup_bucket_access_key = "${var.jgroup_bucket_access_key}"
+    jgroup_bucket_secret_key = "${var.jgroup_bucket_secret_key}"
+  }
 }
 
 resource "google_compute_instance" "xwiki_02t" {
@@ -56,7 +59,6 @@ resource "google_compute_instance" "xwiki_02t" {
       //Access configurations, i.e. IPs via which this instance can be accessed via the Internet. 
       //Omit to ensure that the instance is not accessible from the Internet.
     }
-    network_ip = var.internal_ips[1]
   }
 
   service_account {
@@ -65,6 +67,10 @@ resource "google_compute_instance" "xwiki_02t" {
   }
 
   metadata_startup_script = var.startup_script
+  metadata = {
+    jgroup_bucket_access_key = "${var.jgroup_bucket_access_key}"
+    jgroup_bucket_secret_key = "${var.jgroup_bucket_secret_key}"
+  }
 }
 
 module "google_compute_instance_template" {

@@ -59,5 +59,11 @@ steps:
       - -var-file=terraform.tfvars
       - -auto-approve
 
+substitutions:
+  _GCR_IMAGE: gcr.io/devops-356804/xwiki-test-mysql-nfs@sha256:08e5ac7f4cef560b9576ca89374785d335a82644708298babb73b25b1aec7d84
+  _REGION: us-west1
+  _ZONE_CODE1: a
+  _ZONE_CODE2: b
+
 options:
   logging: CLOUD_LOGGING_ONLY
