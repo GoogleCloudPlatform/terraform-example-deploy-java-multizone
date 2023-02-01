@@ -4,6 +4,14 @@ steps:
     entrypoint: 'bash'
     args: ['prepare_tf_backend.sh', '${PROJECT_ID}']
 
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: prepare_tfvars
+    dir: "tools"
+    secretEnv: ["DATADOG_API_KEY", "DATADOG_APP_KEY"] # refer to secrets ONLY in the args field of a build step.
+    entrypoint: "bash"
+    args:
+      ['-c', 'bash prepare_tfvars.sh $LOCATION ${_ZONE_CODE1} ${_ZONE_CODE2} $$DATADOG_API_KEY $$DATADOG_APP_KEY']
+
   - name: "hashicorp/terraform"
     dir: "config"
     args:
@@ -23,6 +31,17 @@ steps:
       - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
       - -var-file=terraform.tfvars
       - -auto-approve
+
+substitutions:
+  _ZONE_CODE1: a
+  _ZONE_CODE2: b
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/DATADOG_API_KEY/versions/latest
+      env: "DATADOG_API_KEY"
+    - versionName: projects/$PROJECT_ID/secrets/DATADOG_APP_KEY/versions/latest
+      env: "DATADOG_APP_KEY"
 
 options:
   logging: CLOUD_LOGGING_ONLY

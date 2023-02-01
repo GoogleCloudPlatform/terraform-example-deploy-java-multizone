@@ -19,9 +19,10 @@
          thread_pool.max_threads="20"
          thread_pool.keep_alive_time="30000"/>
 
-    <TCPPING async_discovery="true"
-             initial_hosts="${jgroups.tcpping.initial_hosts:tf-init-deploy-basic-1[7800],tf-init-deploy-basic-2[7800]}"
-             port_range="2"/>
+    <GOOGLE_PING
+            location="JGROUP_BUCKET"
+            access_key="ACCESS_KEY"
+            secret_access_key="SECRET_KEY" />
     <MERGE3  min_interval="10000"
              max_interval="30000"/>
     <FD_SOCK/>

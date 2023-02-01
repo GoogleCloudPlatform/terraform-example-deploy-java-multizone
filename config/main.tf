@@ -11,6 +11,7 @@ module "project_services" {
     "cloudresourcemanager.googleapis.com",
     "sqladmin.googleapis.com",
     "cloudbuild.googleapis.com",
+    "servicenetworking.googleapis.com",
   ]
 }
 
@@ -18,7 +19,9 @@ module "networking" {
   source = "./tf_modules/networking"
 
   project_id             = var.project_id
-  region                 = var.region
+  region                 = var.location["region"]
+  zone_code1             = var.location["zone_codes"][0]
+  zone_code2             = var.location["zone_codes"][1]
   firewall_source_ranges = var.firewall_source_ranges
 }
 
@@ -26,31 +29,40 @@ module "database" {
   source = "./tf_modules/database"
 
   project_id        = var.project_id
-  region            = var.region
+  region            = var.location["region"]
+  zone_code1        = var.location["zone_codes"][0]
+  zone_code2        = var.location["zone_codes"][1]
   availability_type = var.availability_type
 }
 
 module "file_store" {
   source = "./tf_modules/file-store"
 
-  region = var.region
+  region    = var.location["region"]
+  zone_code = var.location["zone_codes"][0]
 }
 
 # Use exist project service account for jgroup
-data "google_service_account" "cloudbuild_service_account" {
-  account_id = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+resource "google_service_account" "jgroups_service_account" {
+  account_id = "jgroups-sa-${data.google_project.project.number}"
 }
 
-resource "google_storage_hmac_key" "key" {
-  service_account_email = data.google_service_account.cloudbuild_service_account.email
+resource "google_project_iam_member" "jgroups_owner_permission" {
+  project = var.project_id
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.jgroups_service_account.email}"
+}
+
+resource "google_storage_hmac_key" "jgroup-bucket-key" {
+  service_account_email = google_service_account.jgroups_service_account.email
 }
 
 module "vm" {
   source = "./tf_modules/vm"
 
-  region     = var.region
-  zone_code1 = var.zone_code1
-  zone_code2 = var.zone_code2
+  region     = var.location["region"]
+  zone_code1 = var.location["zone_codes"][0]
+  zone_code2 = var.location["zone_codes"][1]
   project_id = var.project_id
   service_account = {
     email = "${var.vm_sa_email}"
@@ -66,14 +78,15 @@ module "vm" {
   startup_script = templatefile(
     "${path.module}/../tools/startup_script.tftpl",
     {
-      db_ip              = "${module.database.db_ip}",
-      file_store_ip      = "${module.file_store.file_store_ip}",
-      jgroup_bucket_name = google_storage_bucket.xwiki-jgroup-bucket.name,
+      db_ip                    = "${module.database.db_ip}",
+      file_store_ip            = "${module.file_store.file_store_ip}",
+      jgroup_bucket_name       = google_storage_bucket.xwiki-jgroup-bucket.name,
+      jgroup_bucket_access_key = google_storage_hmac_key.jgroup-bucket-key.access_id,
+      jgroup_bucket_secret_key = google_storage_hmac_key.jgroup-bucket-key.secret,
     }
   )
-  jgroup_bucket_name       = google_storage_bucket.xwiki-jgroup-bucket.name
-  jgroup_bucket_access_key = google_storage_hmac_key.key.access_id
-  jgroup_bucket_secret_key = google_storage_hmac_key.key.secret
+  jgroup_bucket_access_key = google_storage_hmac_key.jgroup-bucket-key.access_id
+  jgroup_bucket_secret_key = google_storage_hmac_key.jgroup-bucket-key.secret
 }
 
 module "load_balancer" {
@@ -82,7 +95,9 @@ module "load_balancer" {
   vm1        = module.vm.instance1
   vm2        = module.vm.instance2
   project_id = var.project_id
-  region     = var.region
+  region     = var.location["region"]
+  zone_code1 = var.location["zone_codes"][0]
+  zone_code2 = var.location["zone_codes"][1]
   template   = module.vm.template
   lb_ip      = module.networking.global_addresses[0]
 }

@@ -32,7 +32,7 @@ steps:
       - -var
       - region=$LOCATION
       - -var
-      - zone_code=a
+      - zone_code=${_ZONE_CODE1}
       - -var
       - xwiki_img_name=us-west1-xwiki-01t-img-$BUILD_ID
       - -var

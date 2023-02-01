@@ -34,10 +34,6 @@ variable "startup_script" {
   default     = ""
 }
 
-variable "jgroup_bucket_name" {
-  type = string
-}
-
 variable "jgroup_bucket_access_key" {
   type = string
 }

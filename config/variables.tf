@@ -3,31 +3,34 @@ variable "project_id" {
   type        = string
 }
 
+# Not use
 variable "region" {
   description = "google cloud region where the resource will be created. ex: asia-east1, us-west1"
   type        = string
 }
 
+# Not use
 variable "zone_code1" {
   description = "The zone-code is used to instance 01, it depends on the region. ex: a"
   type        = string
   default     = "a"
 }
 
+# Not use
 variable "zone_code2" {
   description = "The zone-code is used to instance 02, it depends on the region. ex: b"
   type        = string
   default     = "b"
 }
 
-#variable "locations" {
-#  description = "The location contains region, zone_codes(at least two zone codes), zone code depend on the region."
-#  type = list(object({
-#    region     = string
-#    zone_codes = list(string)
-#    }
-#  ))
-#}
+variable "location" {
+  description = "The location contains region, zone_codes(at least two zone codes), zone code depend on the region."
+  type = object({
+    region     = string
+    zone_codes = list(string)
+    }
+  )
+}
 
 variable "xwiki_img_name" {
   description = "Name of Xwiki image build by Packer."

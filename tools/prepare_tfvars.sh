@@ -13,12 +13,10 @@ firewall_source_ranges = [
   // Public to network
   "0.0.0.0/0",
 ]
-locations = [
-  {
-    region     = "$region"
-    zone_codes = ["$zone_code1", "$zone_code2"]
-  },
-]
+location = {
+  region     = "$region"
+  zone_codes = ["$zone_code1", "$zone_code2"]
+}
 datadog_api_key = "$datadog_api_key"
 datadog_app_key = "$datadog_app_key"
 EOF
