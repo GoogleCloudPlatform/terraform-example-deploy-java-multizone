@@ -87,7 +87,10 @@ module "google_compute_instance_template" {
     "g-${var.region}-xwiki-autoscale",
   ]
   network         = "default"
-  service_account = var.service_account
+  service_account = {
+    email  = var.service_account.email
+    scopes = var.service_account.scopes
+  }
 
   startup_script = var.startup_script
 }

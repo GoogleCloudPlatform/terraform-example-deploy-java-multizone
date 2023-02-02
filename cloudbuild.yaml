@@ -1,4 +1,64 @@
 steps:
+  - name: "bash"
+    id: validate_tfvars
+    dir: "tools"
+    entrypoint: "bash"
+    args:
+      [
+        "validate_tfvars.sh",
+        "${PROJECT_ID}",
+        "${LOCATION}",
+        "${_ZONE_CODE1}",
+        "${_ZONE_CODE2}",
+      ]
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: enable_api
+    script: |
+      gcloud services enable cloudbuild.googleapis.com
+      gcloud services enable secretmanager.googleapis.com
+      gcloud services enable cloudresourcemanager.googleapis.com
+      gcloud services enable iam.googleapis.com
+      gcloud services enable compute.googleapis.com
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: binding_cloudbuild_policy
+    env:
+      - PROJECT_ID=$PROJECT_ID
+    script: |
+      gcloud_project_number=`gcloud projects list --filter PROJECT_ID=$PROJECT_ID --format="value(projectNumber)"`
+      echo gcloud_project_number:$gcloud_project_number
+
+      gcloud_cloudbuild_service_account=$gcloud_project_number@cloudbuild.gserviceaccount.com
+      echo gcloud_cloudbuild_service_account:$gcloud_cloudbuild_service_account
+
+      # Notice! do not use owner role in prod site
+      gcloud projects add-iam-policy-binding $PROJECT_ID \
+          --member=serviceAccount:$gcloud_cloudbuild_service_account \
+          --role=roles/owner
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: upload_datadog_secret
+    env:
+      - DATADOG_API_KEY=$_DATADOG_API_KEY
+      - DATADOG_APP_KEY=$_DATADOG_APP_KEY
+    script: |
+      var1=$(gcloud secrets describe DATADOG_API_KEY 2>/dev/null)
+      if [ -z "$var1" ]; then
+        echo "DATADOG_API_KEY not exist, create it by gcloud command"
+        echo -n ${DATADOG_API_KEY} | gcloud secrets create DATADOG_API_KEY  --data-file=-
+      else
+        echo "DATADOG_API_KEY exists"
+      fi
+
+      var2=$(gcloud secrets describe DATADOG_APP_KEY 2>/dev/null)
+      if [ -z "$var2" ]; then
+        echo "DATADOG_APP_KEY not exist, create it by gcloud command"
+        echo -n ${DATADOG_APP_KEY} | gcloud secrets create DATADOG_APP_KEY  --data-file=-
+      else
+        echo "DATADOG_APP_KEY exists"
+      fi
+
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: 'tools'
     entrypoint: 'bash'
@@ -34,7 +94,7 @@ steps:
       - -var
       - zone_code=${_ZONE_CODE1}
       - -var
-      - xwiki_img_name=us-west1-xwiki-01t-img-$BUILD_ID
+      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
       - -var
       - img_desc=XWiki image from Packer which trigger by cloudbuild
       - -var
@@ -61,15 +121,11 @@ steps:
       - -var
       - region=$LOCATION
       - -var
-      - xwiki_img_name=us-west1-xwiki-01t-img-$BUILD_ID
+      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
       - -var
       - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
       - -var-file=terraform.tfvars
       - -auto-approve
-
-substitutions:
-  _ZONE_CODE1: a
-  _ZONE_CODE2: b
 
 availableSecrets:
   secretManager:

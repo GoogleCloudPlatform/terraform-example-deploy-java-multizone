@@ -26,6 +26,9 @@ module "networking" {
 }
 
 module "database" {
+  depends_on = [
+    module.project_services
+  ]
   source = "./tf_modules/database"
 
   project_id        = var.project_id
@@ -36,6 +39,9 @@ module "database" {
 }
 
 module "file_store" {
+  depends_on = [
+    module.project_services
+  ]
   source = "./tf_modules/file-store"
 
   region    = var.location["region"]
@@ -58,6 +64,9 @@ resource "google_storage_hmac_key" "jgroup-bucket-key" {
 }
 
 module "vm" {
+  depends_on = [
+    module.project_services
+  ]
   source = "./tf_modules/vm"
 
   region     = var.location["region"]
@@ -72,7 +81,8 @@ module "vm" {
       "https://www.googleapis.com/auth/monitoring.write",
       "https://www.googleapis.com/auth/service.management.readonly",
       "https://www.googleapis.com/auth/servicecontrol",
-      "https://www.googleapis.com/auth/trace.append"
+      "https://www.googleapis.com/auth/trace.append",
+      "https://www.googleapis.com/auth/devstorage.full_control",
     ]
   }
   startup_script = templatefile(
@@ -90,6 +100,9 @@ module "vm" {
 }
 
 module "load_balancer" {
+  depends_on = [
+    module.project_services
+  ]
   source = "./tf_modules/load-balancer"
 
   vm1        = module.vm.instance1
@@ -109,11 +122,13 @@ resource "random_id" "random_code" {
 }
 
 resource "google_storage_bucket" "xwiki-jgroup-bucket" {
+  depends_on = [
+    module.project_services
+  ]
+  project       = var.project_id
   name          = "xwiki-terraform-jgroup-${random_id.random_code.hex}"
-  location      = "US"
+  location      = var.location["region"]
   force_destroy = true
-
-  uniform_bucket_level_access = true
 }
 
 # DATADOG resource

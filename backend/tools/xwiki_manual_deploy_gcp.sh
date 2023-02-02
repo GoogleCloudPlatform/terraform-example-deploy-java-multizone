@@ -13,7 +13,10 @@ Install(){
 	sudo apt-get -y install mysql-client-core-8.0
 
 	echo "-----Installing XWiki-----"
-	sudo apt-get -y install xwiki-tomcat9-common
+  sudo wget https://maven.xwiki.org/releases/org/xwiki/platform/xwiki-platform-distribution-debian-tomcat9-common/14.10.4/xwiki-platform-distribution-debian-tomcat9-common-14.10.4.deb
+  sudo wget https://maven.xwiki.org/releases/org/xwiki/platform/xwiki-platform-distribution-debian-common/14.10.4/xwiki-platform-distribution-debian-common-14.10.4.deb
+  sudo apt-get install -y -f ./xwiki-platform-distribution-debian-common-14.10.4.deb
+  sudo apt-get install -y -f ./xwiki-platform-distribution-debian-tomcat9-common-14.10.4.deb
 
 }
 

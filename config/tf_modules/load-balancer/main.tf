@@ -37,7 +37,7 @@ module "img" {
     "${var.region}-${var.zone_code2}"
   ]
   autoscaling_enabled = true
-  max_replicas        = 10
+  max_replicas        = 4
   min_replicas        = 1
   cooldown_period     = 120
   autoscaler_name     = "autoscaler"
