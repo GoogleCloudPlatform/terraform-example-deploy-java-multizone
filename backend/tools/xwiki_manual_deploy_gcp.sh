@@ -29,3 +29,9 @@ Install
 sudo cp /tmp/tcp_gcp.xml /usr/lib/xwiki/WEB-INF/observation/remote/jgroups/tcp.xml
 sudo cp /tmp/hibernate_gcp.cfg.xml /etc/xwiki/hibernate.cfg.xml
 sudo cp /tmp/xwiki_startup.sh /home/xwiki_startup.sh
+gsutil -m cp \
+  "gs://legacy-xwiki-installed-flavor/xwiki_14.10.4_flavor/extension_14.10.4.tar.gz" \
+  "gs://legacy-xwiki-installed-flavor/xwiki_14.10.4_flavor/file_14.10.4.tar.gz" \
+  "gs://legacy-xwiki-installed-flavor/xwiki_14.10.4_flavor/xwiki_mysql_db_bk_14.10.4.tar.gz" \
+  /home/
+sudo tar xf /home/extension_14.10.4.tar.gz -C /var/lib/xwiki/data/

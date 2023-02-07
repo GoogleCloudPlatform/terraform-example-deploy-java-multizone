@@ -20,10 +20,15 @@ steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: prepare_tfvars
     dir: "tools"
-    secretEnv: ["DATADOG_API_KEY", "DATADOG_APP_KEY"] # refer to secrets ONLY in the args field of a build step.
     entrypoint: "bash"
     args:
-      ['-c', 'bash prepare_tfvars.sh $LOCATION ${_ZONE_CODE1} ${_ZONE_CODE2} $$DATADOG_API_KEY $$DATADOG_APP_KEY']
+      ['-c', 'bash prepare_tfvars.sh $LOCATION ${_ZONE_CODE1} ${_ZONE_CODE2}']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: prepare_datadog_terraform
+    dir: 'tools'
+    entrypoint: 'bash'
+    args: [ 'prepare_datadog_tf.sh', '${_DATADOG_API_KEY}', '${_DATADOG_APP_KEY}']
 
   - name: "hashicorp/terraform"
     dir: "config"
@@ -39,35 +44,13 @@ steps:
       - -var
       - region=$LOCATION
       - -var
-      - xwiki_img_name=us-west1-xwiki-01t-img-$BUILD_ID
-      - -var
       - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
       - -var-file=terraform.tfvars
       - -auto-approve
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: delete_datadog_secret
-    script: |
-      var1=$(gcloud secrets delete DATADOG_API_KEY 2>/dev/null)
-      if [ -z "$var1" ]; then
-        echo "DATADOG_API_KEY not exist, nothing needs to be changed"
-      else
-        echo "DATADOG_API_KEY exists, Successfully deleted"
-      fi
-
-      var2=$(gcloud secrets delete DATADOG_APP_KEY 2>/dev/null)
-      if [ -z "$var2" ]; then
-        echo "DATADOG_APP_KEY not exist, nothing needs to be changed"
-      else
-        echo "DATADOG_APP_KEY exists, Successfully deleted"
-      fi
-
-availableSecrets:
-  secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/DATADOG_API_KEY/versions/latest
-      env: "DATADOG_API_KEY"
-    - versionName: projects/$PROJECT_ID/secrets/DATADOG_APP_KEY/versions/latest
-      env: "DATADOG_APP_KEY"
+substitutions:
+  _DATADOG_API_KEY: ""
+  _DATADOG_APP_KEY: ""
 
 options:
   logging: CLOUD_LOGGING_ONLY

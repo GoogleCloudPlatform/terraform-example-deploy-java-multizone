@@ -34,10 +34,17 @@ variable "startup_script" {
   default     = ""
 }
 
-variable "jgroup_bucket_access_key" {
-  type = string
+variable "jgroup_bucket_info" {
+  type = object({
+    access_key = string
+    secret_key = string
+  })
 }
 
-variable "jgroup_bucket_secret_key" {
-  type = string
+variable "xwiki_img_info" {
+  description = "Xwiki app image information."
+  type = object({
+    image_name = string
+    image_project = string
+  })
 }

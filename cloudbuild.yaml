@@ -37,28 +37,6 @@ steps:
           --member=serviceAccount:$gcloud_cloudbuild_service_account \
           --role=roles/owner
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: upload_datadog_secret
-    env:
-      - DATADOG_API_KEY=$_DATADOG_API_KEY
-      - DATADOG_APP_KEY=$_DATADOG_APP_KEY
-    script: |
-      var1=$(gcloud secrets describe DATADOG_API_KEY 2>/dev/null)
-      if [ -z "$var1" ]; then
-        echo "DATADOG_API_KEY not exist, create it by gcloud command"
-        echo -n ${DATADOG_API_KEY} | gcloud secrets create DATADOG_API_KEY  --data-file=-
-      else
-        echo "DATADOG_API_KEY exists"
-      fi
-
-      var2=$(gcloud secrets describe DATADOG_APP_KEY 2>/dev/null)
-      if [ -z "$var2" ]; then
-        echo "DATADOG_APP_KEY not exist, create it by gcloud command"
-        echo -n ${DATADOG_APP_KEY} | gcloud secrets create DATADOG_APP_KEY  --data-file=-
-      else
-        echo "DATADOG_APP_KEY exists"
-      fi
-
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: 'tools'
     entrypoint: 'bash'
@@ -72,40 +50,54 @@ steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: prepare_tfvars
     dir: "tools"
-    secretEnv: ["DATADOG_API_KEY", "DATADOG_APP_KEY"] # refer to secrets ONLY in the args field of a build step.
     entrypoint: "bash"
     args:
-      ['-c', 'bash prepare_tfvars.sh $LOCATION ${_ZONE_CODE1} ${_ZONE_CODE2} $$DATADOG_API_KEY $$DATADOG_APP_KEY']
+      ['-c', 'bash prepare_tfvars.sh $LOCATION ${_ZONE_CODE1} ${_ZONE_CODE2}']
 
-  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
-    dir: 'backend/config'
-    args:
-      - init
-      - .
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: prepare_datadog_terraform
+    dir: 'tools'
+    entrypoint: 'bash'
+    args: [ 'prepare_datadog_tf.sh', '${_DATADOG_API_KEY}', '${_DATADOG_APP_KEY}']
 
-  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
-    dir: 'backend/config'
-    args:
-      - build
-      - -var
-      - project_id=$PROJECT_ID
-      - -var
-      - region=$LOCATION
-      - -var
-      - zone_code=${_ZONE_CODE1}
-      - -var
-      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
-      - -var
-      - img_desc=XWiki image from Packer which trigger by cloudbuild
-      - -var
-      - file_sources_tcp=./tcp_gcp.xml
-      - -var
-      - file_sources_hibernate=./hibernate_gcp.cfg.xml
-      - -var
-      - file_sources_startup_sh=../tools/xwiki_startup.sh
-      - -var
-      - deploy_sh=../tools/xwiki_manual_deploy_gcp.sh
-      - .
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: cat_test
+    dir: 'config'
+    script: |
+      cat main.tf
+      cat provider.tf
+      cat variables.tf
+      cat datadog.tf
+
+#  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
+#    dir: 'backend/config'
+#    args:
+#      - init
+#      - .
+#
+#  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
+#    dir: 'backend/config'
+#    args:
+#      - build
+#      - -var
+#      - project_id=$PROJECT_ID
+#      - -var
+#      - region=$LOCATION
+#      - -var
+#      - zone_code=${_ZONE_CODE1}
+#      - -var
+#      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
+#      - -var
+#      - img_desc=XWiki image from Packer which trigger by cloudbuild
+#      - -var
+#      - file_sources_tcp=./tcp_gcp.xml
+#      - -var
+#      - file_sources_hibernate=./hibernate_gcp.cfg.xml
+#      - -var
+#      - file_sources_startup_sh=../tools/xwiki_startup.sh
+#      - -var
+#      - deploy_sh=../tools/xwiki_manual_deploy_gcp.sh
+#      - .
 
   - name: "hashicorp/terraform"
     dir: "config"
@@ -120,19 +112,22 @@ steps:
       - project_id=$PROJECT_ID
       - -var
       - region=$LOCATION
-      - -var
-      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
+#      - -var
+#      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
       - -var
       - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
       - -var-file=terraform.tfvars
       - -auto-approve
 
-availableSecrets:
-  secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/DATADOG_API_KEY/versions/latest
-      env: "DATADOG_API_KEY"
-    - versionName: projects/$PROJECT_ID/secrets/DATADOG_APP_KEY/versions/latest
-      env: "DATADOG_APP_KEY"
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: migrate_xwiki_data
+    dir: "tools"
+    entrypoint: "bash"
+    args: ['xwiki_deploy_flavor.sh']
+
+substitutions:
+  _DATADOG_API_KEY: ""
+  _DATADOG_APP_KEY: ""
 
 options:
   logging: CLOUD_LOGGING_ONLY
