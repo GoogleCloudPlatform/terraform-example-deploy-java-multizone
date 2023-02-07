@@ -22,14 +22,14 @@ variable "location" {
   )
 }
 
-variable "xwiki_img_name" {
-  description = "Name of Xwiki image build by Packer."
-  type        = string
-  validation {
-    condition = var.xwiki_img_name != ""
-    error_message = "Error: xwiki_img_name is required"
-  }
-}
+#variable "xwiki_img_name" {
+#  description = "Name of Xwiki image build by Packer."
+#  type        = string
+#  validation {
+#    condition = var.xwiki_img_name != ""
+#    error_message = "Error: xwiki_img_name is required"
+#  }
+#}
 
 variable "availability_type" {
   description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
@@ -45,7 +45,7 @@ variable "vm_sa_email" {
   type        = string
   validation {
     condition = var.vm_sa_email != ""
-    error_message = "Error: xwiki_img_name is required"
+    error_message = "Error: vm_sa_email is required"
   }
 }
 
@@ -53,30 +53,18 @@ variable "firewall_source_ranges" {
   description = "The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format."
   type        = list(string)
 
-  validation {
-    condition = alltrue([
-      for v in var.firewall_source_ranges : length(v) >=3
-    ])
-    error_message = "Error: firewall_source_ranges is required"
-  }
+#  validation {
+#    condition = alltrue(
+#      [for v in var.firewall_source_ranges : [length(v) >=3]]
+#    )
+#    error_message = "Error: firewall_source_ranges is required"
+#  }
 }
 
-variable "datadog_api_key" {
-  description = "Datadog API Key used to create resources."
-  type        = string
-  sensitive   = true
-  validation {
-    condition = var.datadog_api_key != ""
-    error_message = "Error: datadog_api_key is required"
-  }
-}
-
-variable "datadog_app_key" {
-  description = "Datadog App Key."
-  type        = string
-  sensitive   = true
-  validation {
-    condition = var.datadog_app_key != ""
-    error_message = "Error: datadog_app_key is required"
-  }
+variable "xwiki_img_info" {
+  description = "Xwiki app image information."
+  type = object({
+    image_name = string
+    image_project = string
+  })
 }

@@ -83,6 +83,7 @@ module "vm" {
       "https://www.googleapis.com/auth/servicecontrol",
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/devstorage.full_control",
+      "https://www.googleapis.com/auth/compute",
     ]
   }
   startup_script = templatefile(
@@ -95,8 +96,11 @@ module "vm" {
       jgroup_bucket_secret_key = google_storage_hmac_key.jgroup-bucket-key.secret,
     }
   )
-  jgroup_bucket_access_key = google_storage_hmac_key.jgroup-bucket-key.access_id
-  jgroup_bucket_secret_key = google_storage_hmac_key.jgroup-bucket-key.secret
+  xwiki_img_info = var.xwiki_img_info
+  jgroup_bucket_info = {
+    access_key = google_storage_hmac_key.jgroup-bucket-key.access_id
+    secret_key = google_storage_hmac_key.jgroup-bucket-key.secret
+  }
 }
 
 module "load_balancer" {
@@ -129,32 +133,4 @@ resource "google_storage_bucket" "xwiki-jgroup-bucket" {
   name          = "xwiki-terraform-jgroup-${random_id.random_code.hex}"
   location      = var.location["region"]
   force_destroy = true
-}
-
-# DATADOG resource
-resource "google_service_account" "datadog_account" {
-  account_id = "datadog"
-}
-
-resource "google_service_account_key" "datadog_key" {
-  service_account_id = google_service_account.datadog_account.name
-}
-
-resource "google_project_iam_member" "datadog_viewer_permission" {
-  project = google_service_account.datadog_account.project
-  role    = "roles/viewer"
-  member  = "serviceAccount:${google_service_account.datadog_account.email}"
-}
-
-resource "datadog_integration_gcp" "gcp_project_integration" {
-  depends_on = [
-    google_service_account.datadog_account,
-    google_service_account_key.datadog_key,
-    google_project_iam_member.datadog_viewer_permission,
-  ]
-  project_id     = jsondecode(base64decode(google_service_account_key.datadog_key.private_key))["project_id"]
-  private_key    = jsondecode(base64decode(google_service_account_key.datadog_key.private_key))["private_key"]
-  private_key_id = jsondecode(base64decode(google_service_account_key.datadog_key.private_key))["private_key_id"]
-  client_email   = jsondecode(base64decode(google_service_account_key.datadog_key.private_key))["client_email"]
-  client_id      = jsondecode(base64decode(google_service_account_key.datadog_key.private_key))["client_id"]
 }
