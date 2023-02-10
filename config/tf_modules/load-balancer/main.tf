@@ -23,7 +23,7 @@ resource "google_compute_instance_group" "group_2" {
   ]
 }
 
-module "img" {
+module "mig" {
   source  = "terraform-google-modules/vm/google//modules/mig"
   version = "7.9.0"
 
@@ -86,7 +86,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
   name      = "g-${var.region}-xwiki-lb-http-bkend-vm-auto"
   port_name = "${var.region}-bkend-port"
   backend {
-    group           = module.img.instance_group
+    group           = module.mig.instance_group
     max_utilization = 0.8
   }
   backend {
@@ -103,7 +103,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
     minimum_ring_size = 1024
   }
   health_checks = [
-    module.img.health_check_self_links[0],
+    module.mig.health_check_self_links[0],
   ]
 }
 

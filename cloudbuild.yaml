@@ -60,15 +60,6 @@ steps:
     entrypoint: 'bash'
     args: [ 'prepare_datadog_tf.sh', '${_DATADOG_API_KEY}', '${_DATADOG_APP_KEY}']
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: cat_test
-    dir: 'config'
-    script: |
-      cat main.tf
-      cat provider.tf
-      cat variables.tf
-      cat datadog.tf
-
 #  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
 #    dir: 'backend/config'
 #    args:

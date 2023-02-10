@@ -82,6 +82,10 @@ module "google_compute_instance_template" {
     "g-${var.region}-xwiki-autoscale",
   ]
   network         = "default"
+  access_config   = [{
+    nat_ip = null
+    network_tier = "PREMIUM"
+  }]
   service_account = {
     email  = var.service_account.email
     scopes = var.service_account.scopes

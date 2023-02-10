@@ -20,6 +20,24 @@ ZONE=$(gcloud compute instances list --filter="name ~ ${VM_01_NAME}" --format="v
 
 gcloud compute instances add-metadata ${VM_01_FULLNAME} --metadata-from-file ssh-keys=${HOME}/.ssh/id_rsa.pub --zone=${ZONE}
 
+# Check if work folder exists to avoid timing issue
+timeout=60
+start_time=$(date +%s)
+
+while true; do
+  current_time=$(date +%s)
+  elapsed_time=$((current_time-start_time))
+  if [ $elapsed_time -ge $timeout ]; then
+    echo "The folder was not found within $timeout seconds."
+    exit 1
+  fi
+  ssh -i ${HOME}/.ssh/id_rsa -o "StrictHostKeyChecking no" -o ConnectionAttempts=30 ${USER}@${VM_01_NAME_EXTERNAL_IP} "mount | grep \/var\/lib\/xwiki\/data\/store\/file"
+  if [ $? -eq 0 ]; then
+    echo "The xwiki store folder was found."
+    break
+  fi
+done
+
 ssh -i ${HOME}/.ssh/id_rsa -o "StrictHostKeyChecking no" ${USER}@${VM_01_NAME_EXTERNAL_IP} "sudo su -c \"cd /home ; tar -zxvf file_14.10.4.tar.gz -C /var/lib/xwiki/data/store/ ; tar zxvf xwiki_mysql_db_bk_14.10.4.tar.gz \""
 ssh -i ${HOME}/.ssh/id_rsa -o "StrictHostKeyChecking no" ${USER}@${VM_01_NAME_EXTERNAL_IP} "mysql -uxwiki -pxwiki -h${DB_IP} xwiki < /home/xwiki_bk_14.10.sql"
 
