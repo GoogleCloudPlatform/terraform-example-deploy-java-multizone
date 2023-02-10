@@ -1,8 +1,3 @@
-data "google_compute_image" "ubuntu_latest" {
-  family = "xwiki"
-  #name   = "us-west1-xwiki-01t-img-fe976d17"
-}
-
 resource "google_compute_instance" "xwiki_01t" {
   name             = "g-${var.region}-${var.zone_code1}-xwiki-01t"
   zone             = "${var.region}-${var.zone_code1}"
