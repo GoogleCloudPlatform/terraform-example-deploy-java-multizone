@@ -134,3 +134,8 @@ resource "google_storage_bucket" "xwiki-jgroup-bucket" {
   location      = var.location["region"]
   force_destroy = true
 }
+
+# Cloud monitor Xwiki HSA dashboard
+resource "google_monitoring_dashboard" "dashboard" {
+  dashboard_json = file("./xwiki_gce_monitor_dashboard.json")
+}
