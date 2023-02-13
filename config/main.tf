@@ -4,14 +4,11 @@ module "project_services" {
   project_id                  = var.project_id
 
   activate_apis = [
-    "run.googleapis.com",
-    "iam.googleapis.com",
+    "compute.googleapis.com",
     "file.googleapis.com",
     "servicenetworking.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "sqladmin.googleapis.com",
-    "cloudbuild.googleapis.com",
-    "servicenetworking.googleapis.com",
   ]
 }
 

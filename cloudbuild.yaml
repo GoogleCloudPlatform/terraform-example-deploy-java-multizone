@@ -5,31 +5,6 @@ steps:
     entrypoint: "bash"
     args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_ZONE_CODE1}', '${_ZONE_CODE2}']
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: enable_api
-    script: |
-      gcloud services enable cloudbuild.googleapis.com
-      gcloud services enable secretmanager.googleapis.com
-      gcloud services enable cloudresourcemanager.googleapis.com
-      gcloud services enable iam.googleapis.com
-      gcloud services enable compute.googleapis.com
-
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: binding_cloudbuild_policy
-    env:
-      - PROJECT_ID=$PROJECT_ID
-    script: |
-      gcloud_project_number=`gcloud projects list --filter PROJECT_ID=$PROJECT_ID --format="value(projectNumber)"`
-      echo gcloud_project_number:$gcloud_project_number
-
-      gcloud_cloudbuild_service_account=$gcloud_project_number@cloudbuild.gserviceaccount.com
-      echo gcloud_cloudbuild_service_account:$gcloud_cloudbuild_service_account
-
-      # Notice! do not use owner role in prod site
-      gcloud projects add-iam-policy-binding $PROJECT_ID \
-          --member=serviceAccount:$gcloud_cloudbuild_service_account \
-          --role=roles/owner
-
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: 'tools'
     entrypoint: 'bash'
@@ -95,8 +70,6 @@ steps:
       - project_id=$PROJECT_ID
       - -var
       - region=$LOCATION
-#      - -var
-#      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
       - -var
       - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
       - -var-file=terraform.tfvars
