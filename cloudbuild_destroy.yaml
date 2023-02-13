@@ -43,6 +43,7 @@ steps:
 substitutions:
   _DATADOG_API_KEY: ""
   _DATADOG_APP_KEY: ""
+  _XWIKI_SQL_USER_PASSWORD: "vuYTCazG0IcEc"
 
 options:
   logging: CLOUD_LOGGING_ONLY
