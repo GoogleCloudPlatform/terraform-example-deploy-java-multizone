@@ -20,6 +20,11 @@ variable "zone_code2" {
   default     = "b"
 }
 
+variable "xwiki_sql_user_password" {
+  description = "Default password for user xwiki"
+  type        = string
+}
+
 variable "availability_type" {
   description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
   type        = string

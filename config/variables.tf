@@ -22,15 +22,6 @@ variable "location" {
   )
 }
 
-#variable "xwiki_img_name" {
-#  description = "Name of Xwiki image build by Packer."
-#  type        = string
-#  validation {
-#    condition = var.xwiki_img_name != ""
-#    error_message = "Error: xwiki_img_name is required"
-#  }
-#}
-
 variable "availability_type" {
   description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
   type        = string
@@ -49,16 +40,14 @@ variable "vm_sa_email" {
   }
 }
 
+variable "xwiki_sql_user_password" {
+  description = "Default password for user xwiki"
+  type        = string
+}
+
 variable "firewall_source_ranges" {
   description = "The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format."
   type        = list(string)
-
-#  validation {
-#    condition = alltrue(
-#      [for v in var.firewall_source_ranges : [length(v) >=3]]
-#    )
-#    error_message = "Error: firewall_source_ranges is required"
-#  }
 }
 
 variable "xwiki_img_info" {

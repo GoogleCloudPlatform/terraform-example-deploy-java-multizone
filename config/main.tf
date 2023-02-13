@@ -30,6 +30,7 @@ module "database" {
     module.project_services
   ]
   source = "./tf_modules/database"
+  xwiki_sql_user_password = var.xwiki_sql_user_password
 
   project_id        = var.project_id
   region            = var.location["region"]

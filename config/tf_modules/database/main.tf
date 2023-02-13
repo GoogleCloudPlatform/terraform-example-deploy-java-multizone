@@ -35,10 +35,10 @@ resource "google_sql_database" "xwiki" {
   instance  = google_sql_database_instance.xwiki_inatance.name
 }
 
-resource "google_sql_user" "user_1" {
+resource "google_sql_user" "xwiki_user" {
   name     = "xwiki"
   instance = google_sql_database_instance.xwiki_inatance.name
-  password = "xwiki"
+  password = var.xwiki_sql_user_password
 }
 
 resource "google_compute_global_address" "sql_address" {
