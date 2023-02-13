@@ -73,8 +73,8 @@
          engines) you will also have to set the property xwiki.db in xwiki.cfg file
     -->
     <property name="hibernate.connection.url">jdbc:mysql://xwiki-sql-db/xwiki?useSSL=false&amp;connectionTimeZone=LOCAL&amp;allowPublicKeyRetrieval=true</property>
-    <property name="hibernate.connection.username">xwiki</property>
-    <property name="hibernate.connection.password">xwiki</property>
+    <property name="hibernate.connection.username">xwiki-sql-db-username</property>
+    <property name="hibernate.connection.password">xwiki-sql-db-password</property>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="hibernate.dbcp.poolPreparedStatements">true</property>
     <property name="hibernate.dbcp.maxOpenPreparedStatements">20</property>

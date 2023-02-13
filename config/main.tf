@@ -29,7 +29,7 @@ module "database" {
   depends_on = [
     module.project_services
   ]
-  source = "./tf_modules/database"
+  source                  = "./tf_modules/database"
   xwiki_sql_user_password = var.xwiki_sql_user_password
 
   project_id        = var.project_id
@@ -92,6 +92,8 @@ module "vm" {
     {
       db_ip                    = "${module.database.db_ip}",
       file_store_ip            = "${module.file_store.file_store_ip}",
+      xwiki_db_username        = module.database.xwiki_user.name
+      xwiki_db_password        = module.database.xwiki_user.password
       jgroup_bucket_name       = google_storage_bucket.xwiki-jgroup-bucket.name,
       jgroup_bucket_access_key = google_storage_hmac_key.jgroup-bucket-key.access_id,
       jgroup_bucket_secret_key = google_storage_hmac_key.jgroup-bucket-key.secret,
@@ -116,7 +118,7 @@ module "load_balancer" {
   region     = var.location["region"]
   zone_code1 = var.location["zone_codes"][0]
   zone_code2 = var.location["zone_codes"][1]
-  xwiki_mig = module.vm.xwiki_mig
+  xwiki_mig  = module.vm.xwiki_mig
   lb_ip      = module.networking.global_addresses[0]
 }
 

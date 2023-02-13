@@ -2,7 +2,7 @@ variable "project_id" {
   description = "GCP project ID. e.g.: test-367504"
   type        = string
   validation {
-    condition = var.project_id != ""
+    condition     = var.project_id != ""
     error_message = "Error: project_id is required"
   }
 }
@@ -35,7 +35,7 @@ variable "vm_sa_email" {
   description = "Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles."
   type        = string
   validation {
-    condition = var.vm_sa_email != ""
+    condition     = var.vm_sa_email != ""
     error_message = "Error: vm_sa_email is required"
   }
 }
@@ -53,7 +53,7 @@ variable "firewall_source_ranges" {
 variable "xwiki_img_info" {
   description = "Xwiki app image information."
   type = object({
-    image_name = string
+    image_name    = string
     image_project = string
   })
 }
