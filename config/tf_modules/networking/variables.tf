@@ -1,21 +1,21 @@
 variable "project_id" {
-  description = "The project ID will be created the address in. ex: datadogtest-367504"
+  description = "GCP project ID. e.g.: test-367504"
   type        = string
 }
 
 variable "region" {
-  description = "The region will be created the address in, ex: asia-east1, us-west1"
+  description = "The region chosen to be used. e.q.: us-west1"
   type        = string
 }
 
 variable "zone_code1" {
-  description = "It depends on the region. ex: a"
+  description = "Code depending on the chosen zone. e.q.: a"
   type        = string
   default     = "a"
 }
 
 variable "zone_code2" {
-  description = "It depends on the region. ex: b"
+  description = "Code depending on the chosen zone. e.q.: b"
   type        = string
   default     = "b"
 }

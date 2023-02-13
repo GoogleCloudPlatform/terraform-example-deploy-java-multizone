@@ -1,6 +1,6 @@
 resource "google_sql_database_instance" "xwiki_inatance" {
   name = "xwiki-${var.region}-db"
-  //root_password    = "1qaz2wsx" //not work in mysql
+  //root_password    = "1qaz2wsx" // doesn’t work in MySQL
   database_version = "MYSQL_8_0"
   region           = var.region
   settings {
@@ -11,7 +11,7 @@ resource "google_sql_database_instance" "xwiki_inatance" {
     }
     location_preference {
       zone           = "${var.region}-${var.zone_code1}"
-      secondary_zone = "${var.region}-${var.zone_code2}" // can't not pass terraform plan if version < 3.39
+      secondary_zone = "${var.region}-${var.zone_code2}" // cannot pass Terraform plan if version < 3.39
     }
     tier      = "db-custom-2-4096" //The machine type 
     disk_type = "PD_SSD"
@@ -24,7 +24,7 @@ resource "google_sql_database_instance" "xwiki_inatance" {
 
   deletion_protection = false                                                         // in order to destroy by using terraform destroy
   depends_on          = [google_service_networking_connection.private_vpc_connection] // must explicitly add a depends_on
-  // if no depends_on, it will Error, failed to create instance because the network doesn't have at least 1 private services connection. 
+  // if no 'depends_on' set, an error will occur and fail to create an instance because the network doesn’t have at least 1 private service connection.  
   // Please see https://cloud.google.com/sql/docs/mysql/private-ip#network_requirements for how to create this connection.
 }
 

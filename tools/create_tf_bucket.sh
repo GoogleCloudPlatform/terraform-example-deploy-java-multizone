@@ -1,4 +1,3 @@
-
 project_id=$1
 
 gcloud projects list --filter PROJECT_ID=$project_id --format="value(projectNumber)"
@@ -9,6 +8,6 @@ status=$?
 if [ $status -eq 0 ]; then
         echo "bucket exists"
 else
-        echo "bucket not exist, create bucket by gcloud command"
+        echo "bucket does not exist. Creating bucket by gcloud command."
         gcloud storage buckets create gs://$bucketName
 fi

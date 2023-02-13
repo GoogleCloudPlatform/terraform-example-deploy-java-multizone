@@ -33,7 +33,7 @@ gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
 
 var1=$(gcloud secrets describe DATADOG_API_KEY 2>/dev/null)
 if [ -z "$var1" ]; then
-  echo "DATADOG_API_KEY not exist, create it by gcloud command"
+  echo "DATADOG_API_Key does not exist in Secret Manager. Creating key by gcloud command."
   echo -n ${DATADOG_API_KEY} | gcloud secrets create DATADOG_API_KEY  --data-file=-
 else
   echo "DATADOG_API_KEY exists"
@@ -41,7 +41,7 @@ fi
 
 var2=$(gcloud secrets describe DATADOG_APP_KEY 2>/dev/null)
 if [ -z "$var2" ]; then
-  echo "DATADOG_APP_KEY not exist, create it by gcloud command"
+  echo "DATADOG_APP_Key does not exist in Secret Manager. Creating key by gcloud command."
   echo -n ${DATADOG_APP_KEY} | gcloud secrets create DATADOG_APP_KEY  --data-file=-
 else
   echo "DATADOG_APP_KEY exists"

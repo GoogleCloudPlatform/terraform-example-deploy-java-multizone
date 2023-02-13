@@ -1,10 +1,10 @@
 output "instance1" {
-  description = "Main compute instance 1"
+  description = "Compute instance for XWiki"
   value       = google_compute_instance.xwiki_01t
 }
 
 output "instance2" {
-  description = "Main compute instance 2"
+  description = "Compute instance for XWiki"
   value       = google_compute_instance.xwiki_02t
 }
 

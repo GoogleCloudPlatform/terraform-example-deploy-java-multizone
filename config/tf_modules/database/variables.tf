@@ -4,18 +4,18 @@ variable "project_id" {
 }
 
 variable "region" {
-  description = "he region of the Cloud SQL resource. ex: asia-east1, us-west1"
+  description = "The region of the Cloud SQL resource. ex: asia-east1, us-west1"
   type        = string
 }
 
 variable "zone_code1" {
-  description = "The zone-code1 is used to DB location_preference, it depends on the region. ex: a"
+  description = "zone-code1 is used for DB location_preference, it depends on the region. E.g.: a"
   type        = string
   default     = "a"
 }
 
 variable "zone_code2" {
-  description = "The zone-code2 is used to DB location_preference, it depends on the region. ex: b"
+  description = "zone-code2 is used for DB location_preference, it depends on the region. E.g.: b"
   type        = string
   default     = "b"
 }

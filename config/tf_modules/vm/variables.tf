@@ -1,23 +1,23 @@
+variable "project_id" {
+  description = "GCP project ID. e.g.: test-367504"
+  type        = string
+}
+
 variable "region" {
-  description = "The region will be created the vm in, ex: asia-east1, us-west1"
+  description = "The region chosen to be used. e.q. us-west1"
   type        = string
 }
 
 variable "zone_code1" {
-  description = "The zone-code is used to instance 01, it depends on the region. ex: a"
+  description = "Code depending on the chosen zone. e.q.: a"
   type        = string
   default     = "a"
 }
 
 variable "zone_code2" {
-  description = "The zone-code is used to instance 02, it depends on the region. ex: b"
+  description = "Code depending on the chosen zone. e.q.: b"
   type        = string
   default     = "b"
-}
-
-variable "project_id" {
-  description = "The project ID will be created the vm in. ex: datadogtest-367504"
-  type        = string
 }
 
 variable "service_account" {
@@ -29,7 +29,7 @@ variable "service_account" {
 }
 
 variable "startup_script" {
-  description = "User startup script to run when instances spin up"
+  description = "The startup script to run when instances start up"
   type        = any
   default     = ""
 }

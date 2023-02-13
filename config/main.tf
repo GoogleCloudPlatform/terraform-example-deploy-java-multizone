@@ -49,7 +49,7 @@ module "file_store" {
   zone_code = var.location["zone_codes"][0]
 }
 
-# Use exist project service account for jgroup
+# Use existing project service account for jgroup
 resource "google_service_account" "jgroups_service_account" {
   account_id = "jgroups-sa-${data.google_project.project.number}"
 }

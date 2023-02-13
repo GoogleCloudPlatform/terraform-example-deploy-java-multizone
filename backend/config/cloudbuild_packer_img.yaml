@@ -18,7 +18,7 @@ steps:
       - -var
       - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
       - -var
-      - img_desc=XWiki image from Packer which trigger by cloudbuild
+      - img_desc=XWiki image from Packer which is triggered by Cloud Build
       - -var
       - file_sources_tcp=./tcp_gcp.xml
       - -var

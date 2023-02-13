@@ -1,5 +1,5 @@
 variable "project_id" {
-  description = "google cloud project id where the resource will be created."
+  description = "GCP project ID. e.g.: test-367504"
   type        = string
   validation {
     condition = var.project_id != ""
@@ -9,12 +9,12 @@ variable "project_id" {
 
 # Not use
 variable "region" {
-  description = "google cloud region where the resource will be created. ex: asia-east1, us-west1"
+  description = "The region chosen where the resources will be created, e.q.: us-west1"
   type        = string
 }
 
 variable "location" {
-  description = "The location contains region, zone_codes(at least two zone codes), zone code depend on the region."
+  description = "The location contains region and zone_codes (atleast 2 zone codes). Zone code depends on the region chosen."
   type = object({
     region     = string
     zone_codes = list(string)
