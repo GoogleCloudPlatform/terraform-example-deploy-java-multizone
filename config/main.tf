@@ -6,13 +6,16 @@ module "project_services" {
   activate_apis = [
     "compute.googleapis.com",
     "file.googleapis.com",
+    "iam.googleapis.com",
     "servicenetworking.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
     "sqladmin.googleapis.com",
   ]
 }
 
 module "networking" {
+  depends_on = [
+    module.project_services
+  ]
   source = "./tf_modules/networking"
 
   project_id             = var.project_id
@@ -48,6 +51,9 @@ module "file_store" {
 
 # Use existing project service account for jgroup
 resource "google_service_account" "jgroups_service_account" {
+  depends_on = [
+    module.project_services
+  ]
   account_id = "jgroups-sa-${data.google_project.project.number}"
 }
 

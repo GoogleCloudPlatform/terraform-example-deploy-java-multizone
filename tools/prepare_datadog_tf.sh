@@ -52,6 +52,9 @@ EOF
 # Generate datadog terraform code to datadog.tf
 cat << \EOF > ../config/datadog.tf
 resource "google_service_account" "datadog_account" {
+  depends_on = [
+    module.project_services
+  ]
   account_id = "datadog"
 }
 

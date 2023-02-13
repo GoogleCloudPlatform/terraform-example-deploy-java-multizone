@@ -5,6 +5,11 @@ steps:
     entrypoint: "bash"
     args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE_CODE1}', '${_ZONE_CODE2}']
 
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: enable_api
+    script: |
+      gcloud services enable cloudresourcemanager.googleapis.com
+
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: 'tools'
     entrypoint: 'bash'
