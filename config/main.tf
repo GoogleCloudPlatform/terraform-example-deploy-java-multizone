@@ -116,7 +116,7 @@ module "load_balancer" {
   region     = var.location["region"]
   zone_code1 = var.location["zone_codes"][0]
   zone_code2 = var.location["zone_codes"][1]
-  template   = module.vm.template
+  xwiki_mig = module.vm.xwiki_mig
   lb_ip      = module.networking.global_addresses[0]
 }
 

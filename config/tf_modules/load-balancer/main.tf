@@ -23,54 +23,7 @@ resource "google_compute_instance_group" "group_2" {
   ]
 }
 
-module "mig" {
-  source  = "terraform-google-modules/vm/google//modules/mig"
-  version = "7.9.0"
-
-  project_id        = var.project_id
-  mig_name          = "g-${var.region}-group-autoscale"
-  hostname          = "g-${var.region}-group-autoscale"
-  instance_template = var.template
-  region            = var.region
-  distribution_policy_zones = [
-    "${var.region}-${var.zone_code1}",
-    "${var.region}-${var.zone_code2}"
-  ]
-  autoscaling_enabled = true
-  max_replicas        = 4
-  min_replicas        = 1
-  cooldown_period     = 120
-  autoscaler_name     = "autoscaler"
-  autoscaling_cpu = [
-    {
-      target = 0.5
-    },
-  ]
-  health_check_name = "xwiki-healthcheck-http-8080"
-  health_check = {
-    type                = "tcp"
-    port                = 8080
-    proxy_header        = "NONE"
-    request             = ""
-    response            = ""
-    check_interval_sec  = 5
-    timeout_sec         = 5
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    host                = ""
-    initial_delay_sec   = 300
-    request_path        = "/"
-  }
-  named_ports = [
-    {
-      name = "${var.region}-bkend-port" //same as google_compute_backend_service port_name
-      port = 8080
-    },
-  ]
-}
-
 #==============================BACKEND_SERVICE==============================#
-
 resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
   load_balancing_scheme = "EXTERNAL_MANAGED" //non-classic Global Load Balancer
   enable_cdn            = true
@@ -86,7 +39,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
   name      = "g-${var.region}-xwiki-lb-http-bkend-vm-auto"
   port_name = "${var.region}-bkend-port"
   backend {
-    group           = module.mig.instance_group
+    group           = var.xwiki_mig.instance_group
     max_utilization = 0.8
   }
   backend {
@@ -103,7 +56,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
     minimum_ring_size = 1024
   }
   health_checks = [
-    module.mig.health_check_self_links[0],
+    var.xwiki_mig.health_check_self_links[0],
   ]
 }
 

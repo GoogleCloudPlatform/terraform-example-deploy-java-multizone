@@ -93,3 +93,50 @@ module "google_compute_instance_template" {
 
   startup_script = var.startup_script
 }
+
+
+module "xwiki_mig" {
+  source  = "terraform-google-modules/vm/google//modules/mig"
+  version = "7.9.0"
+
+  project_id        = var.project_id
+  mig_name          = "g-${var.region}-xwiki-group-autoscale"
+  hostname          = "g-${var.region}-xwiki-group-autoscale"
+  instance_template = module.google_compute_instance_template.self_link
+  region            = var.region
+  distribution_policy_zones = [
+    "${var.region}-${var.zone_code1}",
+    "${var.region}-${var.zone_code2}"
+  ]
+  autoscaling_enabled = true
+  max_replicas        = 4
+  min_replicas        = 1
+  cooldown_period     = 120
+  autoscaler_name     = "autoscaler"
+  autoscaling_cpu = [
+    {
+      target = 0.5
+    },
+  ]
+  health_check_name = "xwiki-healthcheck-http-8080"
+  health_check = {
+    type                = "tcp"
+    port                = 8080
+    proxy_header        = "NONE"
+    request             = ""
+    response            = ""
+    check_interval_sec  = 5
+    timeout_sec         = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    host                = ""
+    initial_delay_sec   = 300
+    request_path        = "/"
+  }
+  named_ports = [
+    {
+      name = "${var.region}-bkend-port" //same as google_compute_backend_service port_name
+      port = 8080
+    },
+  ]
+}

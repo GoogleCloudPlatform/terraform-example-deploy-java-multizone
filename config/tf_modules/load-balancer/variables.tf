@@ -30,8 +30,8 @@ variable "zone_code2" {
   default     = "b"
 }
 
-variable "template" {
-  description = "Self-link of instance template"
+variable "xwiki_mig" {
+  description = "Xwiki managed instance group"
   type        = any
 }
 
