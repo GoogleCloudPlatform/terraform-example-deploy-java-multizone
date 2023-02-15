@@ -115,12 +115,8 @@ module "load_balancer" {
   ]
   source = "./tf_modules/load-balancer"
 
-  vm1        = module.vm.instance1
-  vm2        = module.vm.instance2
   project_id = var.project_id
   region     = var.location["region"]
-  zone_code1 = var.location["zone_codes"][0]
-  zone_code2 = var.location["zone_codes"][1]
   xwiki_mig  = module.vm.xwiki_mig
   lb_ip      = module.networking.global_addresses[0]
 }

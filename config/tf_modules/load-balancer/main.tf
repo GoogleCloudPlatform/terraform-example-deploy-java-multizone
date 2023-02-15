@@ -1,28 +1,3 @@
-#==============================BACKENDS==============================#
-resource "google_compute_instance_group" "group_1" {
-  name = "g-${var.region}-${var.zone_code1}-group-manual"
-  named_port {
-    name = "${var.region}-bkend-port" //same as google_compute_backend_service port_name
-    port = 8080
-  }
-  zone = "${var.region}-${var.zone_code1}"
-  instances = [
-    var.vm1.id,
-  ]
-}
-
-resource "google_compute_instance_group" "group_2" {
-  name = "g-${var.region}-${var.zone_code2}-group-manual"
-  named_port {
-    name = "${var.region}-bkend-port" //same as google_compute_backend_service port_name
-    port = 8080
-  }
-  zone = "${var.region}-${var.zone_code2}"
-  instances = [
-    var.vm2.id,
-  ]
-}
-
 #==============================BACKEND_SERVICE==============================#
 resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
   load_balancing_scheme = "EXTERNAL_MANAGED" //non-classic Global Load Balancer
@@ -42,14 +17,6 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
     group           = var.xwiki_mig.instance_group
     max_utilization = 0.8
   }
-  backend {
-    group           = google_compute_instance_group.group_1.self_link
-    max_utilization = 0.8
-  }
-  backend {
-    group           = google_compute_instance_group.group_2.self_link
-    max_utilization = 0.8
-  }
   locality_lb_policy = "RING_HASH"
   session_affinity   = "CLIENT_IP"
   consistent_hash {
@@ -63,7 +30,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
 #==============================FRONTEND==============================#
 resource "google_compute_global_forwarding_rule" "xwiki_lb_http_frontend_ip" {
   load_balancing_scheme = "EXTERNAL_MANAGED" //non-classic Global Load Balancer
-  name                  = "g-${var.region}-lb-http-frontend-ip"
+  name                  = "g-${var.region}-xwiki-lb-http-frontend-ip"
   ip_address            = var.lb_ip
   port_range            = "8080-8080"
   target                = google_compute_target_http_proxy.xwiki_lb_http_8080_target_proxy.self_link

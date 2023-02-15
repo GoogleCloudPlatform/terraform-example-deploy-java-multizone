@@ -31,8 +31,20 @@ resource "google_compute_firewall" "rules" {
   }
   source_ranges = local.source_ranges
   target_tags = [
-    "g-${var.region}-${var.zone_code1}-xwiki-01t",
-    "g-${var.region}-${var.zone_code2}-xwiki-02t",
     "g-${var.region}-xwiki-autoscale",
   ]
+}
+
+resource "google_compute_router" "xwiki_router" {
+  name    = "xwiki-router"
+  region  = var.region
+  network = "default"
+}
+
+resource "google_compute_router_nat" "xwiki_nat" {
+  name                               = "xwiki-router-nat"
+  router                             = google_compute_router.xwiki_router.name
+  region                             = google_compute_router.xwiki_router.region
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
