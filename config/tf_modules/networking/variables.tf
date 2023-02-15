@@ -8,16 +8,9 @@ variable "region" {
   type        = string
 }
 
-variable "zone_code1" {
-  description = "Code depending on the chosen zone. e.q.: a"
-  type        = string
-  default     = "a"
-}
-
-variable "zone_code2" {
-  description = "Code depending on the chosen zone. e.q.: b"
-  type        = string
-  default     = "b"
+variable "zones" {
+  description = "Zones depend on the chosen region. e.q.: [us-west1-a, us-west1-b]"
+  type        = list(string)
 }
 
 variable "firewall_source_ranges" {

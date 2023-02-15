@@ -20,8 +20,7 @@ module "networking" {
 
   project_id             = var.project_id
   region                 = var.location["region"]
-  zone_code1             = var.location["zone_codes"][0]
-  zone_code2             = var.location["zone_codes"][1]
+  zones                  = var.location["zones"]
   firewall_source_ranges = var.firewall_source_ranges
 }
 
@@ -34,8 +33,7 @@ module "database" {
 
   project_id        = var.project_id
   region            = var.location["region"]
-  zone_code1        = var.location["zone_codes"][0]
-  zone_code2        = var.location["zone_codes"][1]
+  zones             = var.location["zones"]
   availability_type = var.availability_type
 }
 
@@ -46,7 +44,7 @@ module "file_store" {
   source = "./tf_modules/file-store"
 
   region    = var.location["region"]
-  zone_code = var.location["zone_codes"][0]
+  zone      = var.location["zones"][0]
 }
 
 # Use existing project service account for jgroup
@@ -74,8 +72,7 @@ module "vm" {
   source = "./tf_modules/vm"
 
   region     = var.location["region"]
-  zone_code1 = var.location["zone_codes"][0]
-  zone_code2 = var.location["zone_codes"][1]
+  zones      = var.location["zones"]
   project_id = var.project_id
   service_account = {
     email = "${var.vm_sa_email}"

@@ -2,7 +2,7 @@ module "google_compute_instance_template" {
   source  = "terraform-google-modules/vm/google///modules/instance_template"
   version = "7.9.0"
 
-  name_prefix      = "g-${var.region}-${var.zone_code1}-xwiki-01t-temp-"
+  name_prefix      = "g-${var.zones[0]}-xwiki-01t-temp-"
   machine_type     = "c2-standard-4"
   min_cpu_platform = "Intel Cascade Lake"
   source_image     = "https://www.googleapis.com/compute/beta/projects/${var.xwiki_img_info.image_project}/global/images/${var.xwiki_img_info.image_name}"
@@ -29,10 +29,7 @@ module "xwiki_mig" {
   hostname          = "g-${var.region}-xwiki-group-autoscale"
   instance_template = module.google_compute_instance_template.self_link
   region            = var.region
-  distribution_policy_zones = [
-    "${var.region}-${var.zone_code1}",
-    "${var.region}-${var.zone_code2}"
-  ]
+  distribution_policy_zones = var.zones
   autoscaling_enabled = true
   max_replicas        = 4
   min_replicas        = 1

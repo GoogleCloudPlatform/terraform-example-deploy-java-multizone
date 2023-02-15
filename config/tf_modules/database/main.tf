@@ -10,8 +10,8 @@ resource "google_sql_database_instance" "xwiki_inatance" {
       binary_log_enabled = true
     }
     location_preference {
-      zone           = "${var.region}-${var.zone_code1}"
-      secondary_zone = "${var.region}-${var.zone_code2}" // cannot pass Terraform plan if version < 3.39
+      zone           = "${var.zones[0]}"
+      secondary_zone = "${var.zones[1]}" // cannot pass Terraform plan if version < 3.39
     }
     tier      = "db-custom-2-4096" //The machine type 
     disk_type = "PD_SSD"

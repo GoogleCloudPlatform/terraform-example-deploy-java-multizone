@@ -1,7 +1,7 @@
 resource "google_filestore_instance" "xwiki" {
   name     = "xwiki-${var.region}-file-share"
   tier     = "BASIC_HDD"
-  location = "${var.region}-${var.zone_code}"
+  location = "${var.zone}"
   networks {
     network = "default"
     modes   = ["MODE_IPV4"]

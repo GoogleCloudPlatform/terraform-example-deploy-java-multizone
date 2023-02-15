@@ -8,16 +8,9 @@ variable "region" {
   type        = string
 }
 
-variable "zone_code1" {
-  description = "zone-code1 is used for DB location_preference, it depends on the region. E.g.: a"
-  type        = string
-  default     = "a"
-}
-
-variable "zone_code2" {
-  description = "zone-code2 is used for DB location_preference, it depends on the region. E.g.: b"
-  type        = string
-  default     = "b"
+variable "zones" {
+  description = "Zones are used for DB location_preference, they depend on the region. E.g.: [us-west1-a, us-west1-b]"
+  type        = list(string)
 }
 
 variable "xwiki_sql_user_password" {

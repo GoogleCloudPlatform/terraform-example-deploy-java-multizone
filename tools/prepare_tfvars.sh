@@ -2,8 +2,8 @@
 
 REGION=$1
 XWIKI_SQL_USER_PASSWORD=$2
-ZONE_CODE1=$3
-ZONE_CODE2=$4
+ZONE1=$3
+ZONE2=$4
 XWIKI_IMAGE_PROJECT=$5
 XWIKI_IMAGE_NAME=$6
 
@@ -23,7 +23,7 @@ firewall_source_ranges = [
 ]
 location = {
   region     = "$REGION"
-  zone_codes = ["$ZONE_CODE1", "$ZONE_CODE2"]
+  zones = ["$ZONE1", "$ZONE2"]
 }
 xwiki_img_info = {
     image_project = "$XWIKI_IMAGE_PROJECT"

@@ -14,10 +14,10 @@ variable "region" {
 }
 
 variable "location" {
-  description = "The location contains region and zone_codes (atleast 2 zone codes). Zone code depends on the region chosen."
+  description = "The location contains region and zone (atleast 2 zone codes). Zones depend on the region chosen."
   type = object({
     region     = string
-    zone_codes = list(string)
+    zones      = list(string)
     }
   )
 }

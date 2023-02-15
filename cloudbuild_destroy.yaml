@@ -3,7 +3,7 @@ steps:
     id: validate_tfvars
     dir: "tools"
     entrypoint: "bash"
-    args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE_CODE1}', '${_ZONE_CODE2}']
+    args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE1}', '${_ZONE2}']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: 'tools'
@@ -14,7 +14,7 @@ steps:
     id: prepare_tfvars
     dir: "tools"
     entrypoint: "bash"
-    args: ['prepare_tfvars.sh', '$LOCATION', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE_CODE1}', '${_ZONE_CODE2}']
+    args: ['prepare_tfvars.sh', '$LOCATION', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE1}', '${_ZONE2}']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: prepare_datadog_terraform

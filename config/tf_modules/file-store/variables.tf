@@ -3,8 +3,7 @@ variable "region" {
   type        = string
 }
 
-variable "zone_code" {
-  description = "zone-code is used for filestore location, code depends on the region chosen. E.g.: a"
+variable "zone" {
+  description = "Zone is used for filestore location, it depends on the region chosen. E.g.: us-west1-a"
   type        = string
-  default     = "a"
 }
