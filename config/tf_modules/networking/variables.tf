@@ -1,16 +1,11 @@
 variable "project_id" {
-  description = "GCP project ID. e.g.: test-367504"
+  description = "GCP project ID."
   type        = string
 }
 
 variable "region" {
-  description = "The region chosen to be used. e.q.: us-west1"
+  description = "The region chosen to be used."
   type        = string
-}
-
-variable "zones" {
-  description = "Zones depend on the chosen region. e.q.: [us-west1-a, us-west1-b]"
-  type        = list(string)
 }
 
 variable "firewall_source_ranges" {

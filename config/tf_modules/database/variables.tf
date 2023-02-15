@@ -1,15 +1,15 @@
 variable "project_id" {
-  description = "The project ID to manage the Cloud SQL resources. ex: datadogtest-367504"
+  description = "The project ID to manage the Cloud SQL resources."
   type        = string
 }
 
 variable "region" {
-  description = "The region of the Cloud SQL resource. ex: asia-east1, us-west1"
+  description = "The region of the Cloud SQL resource."
   type        = string
 }
 
 variable "zones" {
-  description = "Zones are used for DB location_preference, they depend on the region. E.g.: [us-west1-a, us-west1-b]"
+  description = "A list of zones that DB location_preference can be placed in. The list depends on the region chosen."
   type        = list(string)
 }
 

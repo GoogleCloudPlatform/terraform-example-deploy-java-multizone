@@ -1,15 +1,15 @@
 variable "project_id" {
-  description = "GCP project ID. e.g.: test-367504"
+  description = "GCP project ID."
   type        = string
 }
 
 variable "region" {
-  description = "The region chosen to be used. e.q. us-west1"
+  description = "The region chosen to be used."
   type        = string
 }
 
 variable "zones" {
-  description = "Zones depend on the chosen region. e.q.: [us-west1-a, us-west1-b]"
+  description = "A list of zones that mig can be placed in. The list depends on the region chosen."
   type        = list(string)
 }
 
@@ -37,7 +37,7 @@ variable "jgroup_bucket_info" {
 variable "xwiki_img_info" {
   description = "Xwiki app image information."
   type = object({
-    image_name = string
+    image_name    = string
     image_project = string
   })
 }

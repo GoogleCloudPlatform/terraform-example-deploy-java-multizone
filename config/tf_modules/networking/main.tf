@@ -13,7 +13,8 @@ module "global_addresses" {
 
   project_id   = var.project_id
   region       = var.region
-  address_type = "EXTERNAL" // module default is INTERNAL. but resource default is EXTERNAL
+  // module default is INTERNAL. but resource default is EXTERNAL
+  address_type = "EXTERNAL"
   global       = true
   names = [
     "xwiki-${var.region}-lb-http-8080-ip",

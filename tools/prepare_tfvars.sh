@@ -23,10 +23,10 @@ firewall_source_ranges = [
 ]
 location = {
   region     = "$REGION"
-  zones = ["$ZONE1", "$ZONE2"]
+  zones      = ["$ZONE1", "$ZONE2"]
 }
 xwiki_img_info = {
     image_project = "$XWIKI_IMAGE_PROJECT"
-    image_name = "$XWIKI_IMAGE_NAME"
+    image_name    = "$XWIKI_IMAGE_NAME"
 }
 EOF

@@ -1,6 +1,5 @@
-resource "google_sql_database_instance" "xwiki_inatance" {
+resource "google_sql_database_instance" "xwiki_instance" {
   name = "xwiki-${var.region}-db"
-  //root_password    = "1qaz2wsx" // doesn’t work in MySQL
   database_version = "MYSQL_8_0"
   region           = var.region
   settings {
@@ -10,10 +9,10 @@ resource "google_sql_database_instance" "xwiki_inatance" {
       binary_log_enabled = true
     }
     location_preference {
-      zone           = "${var.zones[0]}"
-      secondary_zone = "${var.zones[1]}" // cannot pass Terraform plan if version < 3.39
+      zone           = var.zones[0]
+      secondary_zone = var.zones[1]
     }
-    tier      = "db-custom-2-4096" //The machine type 
+    tier      = "db-custom-2-4096"
     disk_type = "PD_SSD"
     disk_size = 20
     ip_configuration {
@@ -22,22 +21,20 @@ resource "google_sql_database_instance" "xwiki_inatance" {
     }
   }
 
-  deletion_protection = false                                                         // in order to destroy by using terraform destroy
-  depends_on          = [google_service_networking_connection.private_vpc_connection] // must explicitly add a depends_on
-  // if no 'depends_on' set, an error will occur and fail to create an instance because the network doesn’t have at least 1 private service connection.  
-  // Please see https://cloud.google.com/sql/docs/mysql/private-ip#network_requirements for how to create this connection.
+  deletion_protection = false
+  depends_on          = [google_service_networking_connection.private_vpc_connection]
 }
 
 resource "google_sql_database" "xwiki" {
   name      = "xwiki"
   charset   = "utf8"
   collation = "utf8_general_ci"
-  instance  = google_sql_database_instance.xwiki_inatance.name
+  instance  = google_sql_database_instance.xwiki_instance.name
 }
 
 resource "google_sql_user" "xwiki_user" {
   name     = "xwiki"
-  instance = google_sql_database_instance.xwiki_inatance.name
+  instance = google_sql_database_instance.xwiki_instance.name
   password = var.xwiki_sql_user_password
 }
 

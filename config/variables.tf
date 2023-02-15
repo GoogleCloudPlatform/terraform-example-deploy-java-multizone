@@ -1,5 +1,5 @@
 variable "project_id" {
-  description = "GCP project ID. e.g.: test-367504"
+  description = "GCP project ID."
   type        = string
   validation {
     condition     = var.project_id != ""
@@ -7,17 +7,11 @@ variable "project_id" {
   }
 }
 
-# Not use
-variable "region" {
-  description = "The region chosen where the resources will be created, e.q.: us-west1"
-  type        = string
-}
-
 variable "location" {
-  description = "The location contains region and zone (atleast 2 zone codes). Zones depend on the region chosen."
+  description = "location contains a region and a list of zones (at least 2 zones must be selected). Zones depends on the region chosen."
   type = object({
-    region     = string
-    zones      = list(string)
+    region = string
+    zones  = list(string)
     }
   )
 }

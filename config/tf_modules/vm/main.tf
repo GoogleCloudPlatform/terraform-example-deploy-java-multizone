@@ -11,7 +11,7 @@ module "google_compute_instance_template" {
   tags = [
     "g-${var.region}-xwiki-autoscale",
   ]
-  network         = "default"
+  network = "default"
   service_account = {
     email  = var.service_account.email
     scopes = var.service_account.scopes
@@ -24,17 +24,17 @@ module "xwiki_mig" {
   source  = "terraform-google-modules/vm/google//modules/mig"
   version = "7.9.0"
 
-  project_id        = var.project_id
-  mig_name          = "g-${var.region}-xwiki-group-autoscale"
-  hostname          = "g-${var.region}-xwiki-group-autoscale"
-  instance_template = module.google_compute_instance_template.self_link
-  region            = var.region
+  project_id                = var.project_id
+  mig_name                  = "g-${var.region}-xwiki-group-autoscale"
+  hostname                  = "g-${var.region}-xwiki-group-autoscale"
+  instance_template         = module.google_compute_instance_template.self_link
+  region                    = var.region
   distribution_policy_zones = var.zones
-  autoscaling_enabled = true
-  max_replicas        = 4
-  min_replicas        = 1
-  cooldown_period     = 120
-  autoscaler_name     = "autoscaler"
+  autoscaling_enabled       = true
+  max_replicas              = 4
+  min_replicas              = 1
+  cooldown_period           = 120
+  autoscaler_name           = "autoscaler"
   autoscaling_cpu = [
     {
       target = 0.5

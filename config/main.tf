@@ -20,7 +20,6 @@ module "networking" {
 
   project_id             = var.project_id
   region                 = var.location["region"]
-  zones                  = var.location["zones"]
   firewall_source_ranges = var.firewall_source_ranges
 }
 
@@ -43,11 +42,10 @@ module "file_store" {
   ]
   source = "./tf_modules/file-store"
 
-  region    = var.location["region"]
-  zone      = var.location["zones"][0]
+  region = var.location["region"]
+  zone   = var.location["zones"][0]
 }
 
-# Use existing project service account for jgroup
 resource "google_service_account" "jgroups_service_account" {
   depends_on = [
     module.project_services
@@ -134,7 +132,6 @@ resource "google_storage_bucket" "xwiki-jgroup-bucket" {
   force_destroy = true
 }
 
-# Cloud monitor Xwiki HSA dashboard
 resource "google_monitoring_dashboard" "dashboard" {
   dashboard_json = file("./xwiki_gce_monitor_dashboard.json")
 }

@@ -1,6 +1,6 @@
 #==============================BACKEND_SERVICE==============================#
 resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
-  load_balancing_scheme = "EXTERNAL_MANAGED" //non-classic Global Load Balancer
+  load_balancing_scheme = "EXTERNAL_MANAGED"
   enable_cdn            = true
   cdn_policy {
     cache_key_policy {
@@ -29,7 +29,7 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
 
 #==============================FRONTEND==============================#
 resource "google_compute_global_forwarding_rule" "xwiki_lb_http_frontend_ip" {
-  load_balancing_scheme = "EXTERNAL_MANAGED" //non-classic Global Load Balancer
+  load_balancing_scheme = "EXTERNAL_MANAGED"
   name                  = "g-${var.region}-xwiki-lb-http-frontend-ip"
   ip_address            = var.lb_ip
   port_range            = "8080-8080"
