@@ -42,7 +42,7 @@ module "xwiki_mig" {
   ]
   health_check_name = "xwiki-healthcheck-http-8080"
   health_check = {
-    type                = "tcp"
+    type                = "http"
     port                = 8080
     proxy_header        = "NONE"
     request             = ""
@@ -52,8 +52,8 @@ module "xwiki_mig" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     host                = ""
-    initial_delay_sec   = 300
-    request_path        = "/"
+    initial_delay_sec   = 600
+    request_path        = "/xwiki/bin/view/Main"
   }
   named_ports = [
     {
