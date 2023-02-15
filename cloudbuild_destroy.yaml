@@ -34,8 +34,6 @@ steps:
       - -var
       - project_id=$PROJECT_ID
       - -var
-      - region=$LOCATION
-      - -var
       - vm_sa_email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
       - -var-file=terraform.tfvars
       - -auto-approve
