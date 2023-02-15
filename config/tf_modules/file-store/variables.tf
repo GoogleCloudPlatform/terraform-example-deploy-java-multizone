@@ -1,5 +1,5 @@
 variable "region" {
-  description = "The region that file-store will be created in."
+  description = "The region that filestore will be created in."
   type        = string
 }
 

@@ -31,7 +31,7 @@ Config_NFS_Xwiki(){
   # For mount store/file to NFS share
   sudo test -d ${XWIKI_DATA_DIR}/store/file || sudo mkdir -p ${XWIKI_DATA_DIR}/store/file
   sudo mount ${NFS_FILE_SHARE}/file ${XWIKI_DATA_DIR}/store/file
-  df -k | grep store || (echo "Mount store/file folder to NFS was created fail ! " ; exit 1)
+  df -k | grep store || (echo "Failed to mount folder to NFS" ; exit 1)
   sudo chown -R tomcat:tomcat ${XWIKI_DATA_DIR}/store/
 
   sleep 3

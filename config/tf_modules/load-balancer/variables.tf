@@ -14,6 +14,6 @@ variable "xwiki_mig" {
 }
 
 variable "lb_ip" {
-  description = "The global ip address for load-balancer."
+  description = "The IP address for load-balancer."
   type        = string
 }

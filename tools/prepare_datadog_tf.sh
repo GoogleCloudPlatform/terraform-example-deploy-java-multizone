@@ -24,7 +24,7 @@ provider "datadog" {
 }
 EOF
 
-# Append datadog variable de to variable.tf
+# Append datadog variable to variable.tf
 cat << \EOF >> ../config/variables.tf
 
 
