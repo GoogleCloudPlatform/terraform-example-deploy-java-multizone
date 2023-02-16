@@ -3,29 +3,36 @@ LOCATION=$1
 XWIKI_SQL_USER_PASSWORD=$2
 USER=migrate
 
-VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ g-${LOCATION}-xwiki-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
 DB_IP=$(gcloud sql instances list --filter="name ~ xwiki-${LOCATION}-db" --format="value(PRIVATE_ADDRESS)")
 
 mkdir -p ${HOME}/.ssh/
 ssh-keygen -q -t rsa -N '' -f ${HOME}/.ssh/google_compute_engine <<<y >/dev/null 2>&1
+
+VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ g-${LOCATION}-xwiki-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
 ZONE=$(gcloud compute instances list --filter="name=${VM_01_NAME}" --format="value(ZONE)")
 
 # Check if work folder exists to avoid timing issue
 TIMEOUT=120
 START_TIME=$(date +%s)
 while true; do
+  VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ g-${LOCATION}-xwiki-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
+  ZONE=$(gcloud compute instances list --filter="name=${VM_01_NAME}" --format="value(ZONE)")
+
   CURRENT_TIME=$(date +%s)
   ELAPSED_TIME=$((CURRENT_TIME-START_TIME))
   if [ $ELAPSED_TIME -ge $TIMEOUT ]; then
     echo "The xwiki folder was not found within $TIMEOUT seconds."
     exit 1
   fi
+  echo "VM Zone: ${ZONE}"
+  ZONE=$(gcloud compute instances list --filter="name=${VM_01_NAME}" --format="value(ZONE)")
   gcloud compute ssh ${USER}@${VM_01_NAME} --zone ${ZONE} --tunnel-through-iap -- "mount | grep \/var\/lib\/xwiki\/data\/store\/file"
   if [ $? -eq 0 ]; then
     echo "The xwiki store folder was found."
     break
   else
     echo "Checking xwiki store folder..."
+    sleep 1
   fi
 done
 

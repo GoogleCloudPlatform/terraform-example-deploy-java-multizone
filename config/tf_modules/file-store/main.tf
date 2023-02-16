@@ -3,7 +3,7 @@ resource "google_filestore_instance" "xwiki" {
   tier     = "BASIC_HDD"
   location = var.zone
   networks {
-    network = "default"
+    network = var.private_network.name
     modes   = ["MODE_IPV4"]
   }
   file_shares {

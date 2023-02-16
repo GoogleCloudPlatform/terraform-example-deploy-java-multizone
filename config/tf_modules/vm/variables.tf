@@ -13,6 +13,10 @@ variable "zones" {
   type        = list(string)
 }
 
+variable "private_network" {
+  type        = any
+}
+
 variable "service_account" {
   description = "Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles."
   type = object({

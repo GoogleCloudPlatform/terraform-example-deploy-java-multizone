@@ -11,12 +11,11 @@ module "google_compute_instance_template" {
   tags = [
     "g-${var.region}-xwiki-autoscale",
   ]
-  network = "default"
+  network = var.private_network.name
   service_account = {
     email  = var.service_account.email
     scopes = var.service_account.scopes
   }
-
   startup_script = var.startup_script
 }
 

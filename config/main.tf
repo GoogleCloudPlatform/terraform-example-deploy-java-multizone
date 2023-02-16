@@ -17,7 +17,6 @@ module "networking" {
     module.project_services
   ]
   source = "./tf_modules/networking"
-
   project_id             = var.project_id
   region                 = var.location["region"]
   firewall_source_ranges = var.firewall_source_ranges
@@ -29,10 +28,10 @@ module "database" {
   ]
   source                  = "./tf_modules/database"
   xwiki_sql_user_password = var.xwiki_sql_user_password
-
   project_id        = var.project_id
   region            = var.location["region"]
   zones             = var.location["zones"]
+  private_network   = module.networking.xwiki_private_network
   availability_type = var.availability_type
 }
 
@@ -41,9 +40,9 @@ module "file_store" {
     module.project_services
   ]
   source = "./tf_modules/file-store"
-
   region = var.location["region"]
   zone   = var.location["zones"][0]
+  private_network   = module.networking.xwiki_private_network
 }
 
 resource "google_service_account" "jgroups_service_account" {
@@ -71,6 +70,7 @@ module "vm" {
 
   region     = var.location["region"]
   zones      = var.location["zones"]
+  private_network   = module.networking.xwiki_private_network
   project_id = var.project_id
   service_account = {
     email = "${var.vm_sa_email}"

@@ -13,6 +13,10 @@ variable "zones" {
   type        = list(string)
 }
 
+variable "private_network" {
+  type        = any
+}
+
 variable "xwiki_sql_user_password" {
   description = "Default password for user xwiki"
   type        = string

@@ -7,6 +7,14 @@ locals {
   )
 }
 
+# Private network
+resource "google_compute_network" "main" {
+  provider                = google
+  name                    = "xwiki-private-network"
+  auto_create_subnetworks = true
+  project                 = var.project_id
+}
+
 module "global_addresses" {
   source  = "terraform-google-modules/address/google"
   version = "3.1.1"
@@ -21,9 +29,9 @@ module "global_addresses" {
   ]
 }
 
-resource "google_compute_firewall" "rules" {
-  name    = "xwiki-${var.region}-fw-http-8080"
-  network = "default"
+resource "google_compute_firewall" "http_rule" {
+  name    = "xwiki-${var.region}-http-8080"
+  network = google_compute_network.main.name
   allow {
     protocol = "tcp"
     ports = [
@@ -36,10 +44,25 @@ resource "google_compute_firewall" "rules" {
   ]
 }
 
+resource "google_compute_firewall" "ssh_rule" {
+  name    = "xwiki-${var.region}-ssh"
+  network = google_compute_network.main.name
+  allow {
+    protocol = "tcp"
+    ports = [
+      "22",
+    ]
+  }
+  source_ranges = ["35.235.240.0/20", ]
+  target_tags = [
+    "g-${var.region}-xwiki-autoscale",
+  ]
+}
+
 resource "google_compute_router" "xwiki_router" {
   name    = "xwiki-router"
   region  = var.region
-  network = "default"
+  network = google_compute_network.main.name
 }
 
 resource "google_compute_router_nat" "xwiki_nat" {

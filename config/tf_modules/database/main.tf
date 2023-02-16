@@ -16,7 +16,7 @@ resource "google_sql_database_instance" "xwiki_instance" {
     disk_type = "PD_SSD"
     disk_size = 20
     ip_configuration {
-      private_network = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/global/networks/default"
+      private_network = "projects/${var.project_id}/global/networks/${var.private_network.name}"
       ipv4_enabled    = false
     }
   }
@@ -43,11 +43,11 @@ resource "google_compute_global_address" "sql_address" {
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 20
-  network       = "default"
+  network       = var.private_network.name
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
-  network = "default"
+  network = var.private_network.name
   service = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [
     google_compute_global_address.sql_address.name,
