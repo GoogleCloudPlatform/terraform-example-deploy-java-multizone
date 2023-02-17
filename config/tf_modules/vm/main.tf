@@ -30,7 +30,7 @@ module "xwiki_mig" {
   region                    = var.region
   distribution_policy_zones = var.zones
   autoscaling_enabled       = true
-  max_replicas              = 4
+  max_replicas              = 6
   min_replicas              = 1
   cooldown_period           = 120
   autoscaler_name           = "autoscaler"
