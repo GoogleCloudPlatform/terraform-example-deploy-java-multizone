@@ -6,7 +6,7 @@ variable "region" {
   type = string
 }
 
-variable "zone_code" {
+variable "zone" {
   type = string
 }
 
@@ -36,4 +36,9 @@ variable "file_sources_startup_sh" {
 variable "deploy_sh" {
   type    = string
   default = "../tools/xwiki_manual_deploy_gcp.sh"
+}
+
+variable "xwiki_migrate_file_bucket" {
+  type    = string
+  default = ""
 }

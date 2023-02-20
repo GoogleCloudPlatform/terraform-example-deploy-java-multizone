@@ -12,12 +12,11 @@ source "googlecompute" "xwiki" {
   image_storage_locations = [
     "${var.region}",
   ]
-  zone              = "${var.region}-${var.zone_code}"
+  zone              = "${var.zone}"
   image_name        = "${var.xwiki_img_name}"
   image_description = "${var.img_desc}"
   image_labels = {
     developer = "cienet"
-    team      = "gcps"
   }
   image_family        = "xwiki"
   source_image_family = "ubuntu-2004-lts"
@@ -38,7 +37,8 @@ build {
   }
 
   provisioner "shell" {
-    script           = "${var.deploy_sh}"
+    environment_vars   = ["XWIKI_MIGRATE_FILE_BUCKET=${var.xwiki_migrate_file_bucket}",]
+    script             = "${var.deploy_sh}"
   }
 
   post-processor "manifest" {

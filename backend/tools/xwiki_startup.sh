@@ -35,18 +35,6 @@ Config_NFS_Xwiki(){
   sudo chown -R tomcat:tomcat ${XWIKI_DATA_DIR}/store/
 
   sleep 3
-
-  # For mount extension to NFS share
-#  sudo test -d ${XWIKI_DATA_DIR}/extension || sudo mkdir -p ${XWIKI_DATA_DIR}/extension
-#  sudo mount ${NFS_FILE_SHARE}/extension  ${XWIKI_DATA_DIR}/extension
-#  df -k | grep extension || (echo "Mount extension folder to NFS  was created fail ! " ; exit 1)
-#  sudo chown -R tomcat:tomcat ${XWIKI_DATA_DIR}/extension
-
-  # Mount NFS share mount point for local xwiki store/file & extension folder
-  #sudo su -c "echo \"${NFS_FILE_SHARE}/file  ${XWIKI_DATA_DIR}/store/file  nfs      defaults,_netdev  0  0\" | tee -a /etc/fstab"
-  #sudo su -c "echo \"${NFS_FILE_SHARE}/extension  ${XWIKI_DATA_DIR}/extension  nfs      defaults,_netdev  0  0\" | tee -a /etc/fstab"
-  #sudo mount -a
-  #mount | grep xwiki || $( echo "The NFS folder was created fail ! " ; exit 1)
 }
 
 
