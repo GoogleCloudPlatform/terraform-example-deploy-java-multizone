@@ -72,7 +72,7 @@ resource "datadog_integration_gcp" "xwiki" {
   depends_on = [
     google_service_account.datadog,
     google_service_account_key.datadog,
-    google_project_iam_member.datadog_viewer_permission,
+    google_project_iam_member.datadog_permission,
   ]
   project_id     = jsondecode(base64decode(google_service_account_key.datadog.private_key))["project_id"]
   private_key    = jsondecode(base64decode(google_service_account_key.datadog.private_key))["private_key"]

@@ -26,6 +26,8 @@ steps:
       - -var
       - file_sources_startup_sh=../tools/xwiki_startup.sh
       - -var
+      - file_deploy_flavor_sh=../tools/xwiki_deploy_flavor.sh
+      - -var
       - deploy_sh=../tools/xwiki_manual_deploy_gcp.sh
       - -var
       - xwiki_migrate_file_bucket=$_XWIKI_MIGRATE_FILE_BUCKET

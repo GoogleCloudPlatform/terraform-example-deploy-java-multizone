@@ -33,6 +33,11 @@ variable "file_sources_startup_sh" {
   default = "../tools/xwiki_startup.sh"
 }
 
+variable "file_deploy_flavor_sh" {
+  type    = string
+  default = "../tools/xwiki_deploy_flavor.sh"
+}
+
 variable "deploy_sh" {
   type    = string
   default = "../tools/xwiki_manual_deploy_gcp.sh"

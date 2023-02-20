@@ -78,11 +78,6 @@ steps:
       - -var-file=terraform.tfvars
       - -auto-approve
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: migrate_xwiki_data
-    dir: "tools"
-    entrypoint: "bash"
-    args: ['xwiki_deploy_flavor.sh', '$LOCATION', '${_XWIKI_SQL_USER_PASSWORD}']
 
 substitutions:
   _DATADOG_API_KEY: ""

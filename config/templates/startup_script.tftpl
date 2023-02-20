@@ -5,3 +5,4 @@ sed -i "s/$(echo ACCESS_KEY | sed -e 's/\([[\/.*]\|\]\)/\\&/g')/$(echo ${jgroup_
 sed -i "s/$(echo SECRET_KEY | sed -e 's/\([[\/.*]\|\]\)/\\&/g')/$(echo ${jgroup_bucket_secret_key} | sed -e 's/[\/&]/\\&/g')/g" /usr/lib/xwiki/WEB-INF/observation/remote/jgroups/tcp.xml
 
 bash /home/xwiki_startup.sh "${db_ip}" "${xwiki_db_username}" "${xwiki_db_password}" "${file_store_ip}"
+bash /home/xwiki_deploy_flavor.sh "${db_ip}" "${xwiki_db_username}" "${xwiki_db_password}" "${file_store_ip}"
