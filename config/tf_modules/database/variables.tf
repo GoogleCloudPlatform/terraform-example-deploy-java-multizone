@@ -14,7 +14,7 @@ variable "zones" {
 }
 
 variable "private_network" {
-  type        = any
+  type = any
 }
 
 variable "xwiki_sql_user_password" {

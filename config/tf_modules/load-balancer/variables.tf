@@ -8,6 +8,10 @@ variable "region" {
   type        = string
 }
 
+variable "xwiki_lb_port_name" {
+  type = string
+}
+
 variable "xwiki_mig" {
   description = "Xwiki managed instance group"
   type        = any

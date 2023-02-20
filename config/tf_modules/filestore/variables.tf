@@ -9,5 +9,5 @@ variable "zone" {
 }
 
 variable "private_network" {
-  type        = any
+  type = any
 }

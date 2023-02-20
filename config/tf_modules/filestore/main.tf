@@ -1,5 +1,5 @@
 resource "google_filestore_instance" "xwiki" {
-  name     = "xwiki-${var.region}-file-share"
+  name     = "xwiki-${var.zone}-filestore"
   tier     = "BASIC_HDD"
   location = var.zone
   networks {

@@ -1,5 +1,4 @@
-#==============================BACKEND_SERVICE==============================#
-resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
+resource "google_compute_backend_service" "xwiki_lb" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
   enable_cdn            = true
   cdn_policy {
@@ -11,8 +10,8 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
     negative_caching  = false
     serve_while_stale = 0
   }
-  name      = "g-${var.region}-xwiki-lb-http-bkend-vm-auto"
-  port_name = "${var.region}-bkend-port"
+  name      = "xwiki-lb-http-bkend-vm-auto"
+  port_name = var.xwiki_lb_port_name
   backend {
     group           = var.xwiki_mig.instance_group
     max_utilization = 0.8
@@ -27,21 +26,20 @@ resource "google_compute_backend_service" "xwiki_lb_http_bkend_vm_auto" {
   ]
 }
 
-#==============================FRONTEND==============================#
-resource "google_compute_global_forwarding_rule" "xwiki_lb_http_frontend_ip" {
+resource "google_compute_global_forwarding_rule" "xwiki_lb_http_frontend" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
-  name                  = "g-${var.region}-xwiki-lb-http-frontend-ip"
+  name                  = "xwiki-lb-http-frontend"
   ip_address            = var.lb_ip
   port_range            = "8080-8080"
-  target                = google_compute_target_http_proxy.xwiki_lb_http_8080_target_proxy.self_link
+  target                = google_compute_target_http_proxy.xwiki_lb_http.self_link
 }
 
-resource "google_compute_target_http_proxy" "xwiki_lb_http_8080_target_proxy" {
+resource "google_compute_target_http_proxy" "xwiki_lb_http" {
   name    = "xwiki-lb-http-8080-target-proxy"
-  url_map = google_compute_url_map.xwiki_lb_http_8080.self_link
+  url_map = google_compute_url_map.xwiki_lb_http.self_link
 }
 
-resource "google_compute_url_map" "xwiki_lb_http_8080" {
-  default_service = google_compute_backend_service.xwiki_lb_http_bkend_vm_auto.self_link
-  name            = "g-${var.region}-xwiki-lb-http-8080"
+resource "google_compute_url_map" "xwiki_lb_http" {
+  default_service = google_compute_backend_service.xwiki_lb.self_link
+  name            = "xwiki-lb-http-8080"
 }

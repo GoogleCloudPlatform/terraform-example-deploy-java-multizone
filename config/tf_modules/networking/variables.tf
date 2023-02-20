@@ -13,3 +13,7 @@ variable "firewall_source_ranges" {
   type        = list(string)
   default     = []
 }
+
+variable "xwiki_vm_tag" {
+  type = string
+}

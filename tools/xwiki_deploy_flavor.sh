@@ -8,14 +8,14 @@ DB_IP=$(gcloud sql instances list --filter="name ~ xwiki-${LOCATION}-db" --forma
 mkdir -p ${HOME}/.ssh/
 ssh-keygen -q -t rsa -N '' -f ${HOME}/.ssh/google_compute_engine <<<y >/dev/null 2>&1
 
-VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ g-${LOCATION}-xwiki-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
+VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ xwiki-${LOCATION}-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
 ZONE=$(gcloud compute instances list --filter="name=${VM_01_NAME}" --format="value(ZONE)")
 
 # Check if work folder exists to avoid timing issue
 TIMEOUT=120
 START_TIME=$(date +%s)
 while true; do
-  VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ g-${LOCATION}-xwiki-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
+  VM_01_NAME=$(gcloud compute instances list --filter="NAME ~ xwiki-${LOCATION}-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)" --limit=1)
   ZONE=$(gcloud compute instances list --filter="name=${VM_01_NAME}" --format="value(ZONE)")
 
   CURRENT_TIME=$(date +%s)
@@ -39,7 +39,7 @@ done
 gcloud compute ssh ${USER}@${VM_01_NAME} --zone ${ZONE} --tunnel-through-iap --command="sudo su -c \"cd /home ; tar -zxvf file_14.10.4.tar.gz -C /var/lib/xwiki/data/store/ ; tar zxvf xwiki_mysql_db_bk_14.10.4.tar.gz \""
 gcloud compute ssh ${USER}@${VM_01_NAME} --zone ${ZONE} --tunnel-through-iap --command="mysql -uxwiki -p${XWIKI_SQL_USER_PASSWORD} -h${DB_IP} xwiki < /home/xwiki_bk_14.10.sql"
 
-VM_NAME_LIST=$(gcloud compute instances list --filter="name ~ g-${LOCATION}-xwiki-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)")
+VM_NAME_LIST=$(gcloud compute instances list --filter="name ~ xwiki-${LOCATION}-group-autoscale-* AND STATUS=RUNNING" --format="value(NAME)")
 for vm in ${VM_NAME_LIST}; do
   vm_zone=$(gcloud compute instances list --filter="name=${vm}" --format="value(ZONE)")
   gcloud compute ssh ${USER}@${vm} --zone ${vm_zone} --tunnel-through-iap --command="sudo systemctl restart tomcat9"

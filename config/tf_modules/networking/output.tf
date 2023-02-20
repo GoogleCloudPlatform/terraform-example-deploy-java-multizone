@@ -4,5 +4,5 @@ output "global_addresses" {
 }
 
 output "xwiki_private_network" {
-  value = google_compute_network.main
+  value = google_compute_network.xwiki
 }
