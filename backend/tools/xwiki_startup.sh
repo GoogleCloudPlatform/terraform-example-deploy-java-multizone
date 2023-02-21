@@ -37,15 +37,9 @@ Config_NFS_Xwiki(){
   sleep 3
 }
 
-
 #############
 ### Main ####
 #############
 
 Config_Xwiki
 Config_NFS_Xwiki
-
-echo "-----Restarting tomcat9-----"
-sudo systemctl restart tomcat9
-sudo systemctl enable tomcat9
-echo "-----XWiki has been successfully deployed-----"

@@ -63,3 +63,8 @@ else
 		echo "ERROR: Failed to extract XWiki Flavor data to NFS folder."
 	fi
 fi
+
+echo "-----Starting tomcat9-----"
+sudo systemctl restart tomcat9
+sudo systemctl enable tomcat9
+echo "-----XWiki has been successfully deployed-----"

@@ -10,7 +10,7 @@ XWIKI_IMAGE_NAME=$6
 if [ -z $XWIKI_IMAGE_PROJECT ]; then
   echo "xwiki project image info empty, set default value"
   XWIKI_IMAGE_PROJECT="migrate-legacy-java-app-gce"
-  XWIKI_IMAGE_NAME="us-west1-xwiki-img-e517582b-3ab0-4ae1-9aee-c2d300165ee7"
+  XWIKI_IMAGE_NAME="us-west1-xwiki-img-cadf6712-c757-47c5-b9b4-71744e803864"
 fi
 
 cat << EOF > ../config/terraform.tfvars
