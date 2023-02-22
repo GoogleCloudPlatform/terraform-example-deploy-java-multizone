@@ -23,12 +23,12 @@ steps:
     args: ['prepare_datadog_tf.sh', '${_DATADOG_API_KEY}', '${_DATADOG_APP_KEY}']
 
   - name: "hashicorp/terraform"
-    dir: "config"
+    dir: "infra"
     args:
       - init
 
   - name: "hashicorp/terraform"
-    dir: "config"
+    dir: "infra"
     args:
       - destroy
       - -var

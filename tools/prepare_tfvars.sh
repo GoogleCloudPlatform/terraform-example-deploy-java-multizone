@@ -13,7 +13,7 @@ if [ -z $XWIKI_IMAGE_PROJECT ]; then
   XWIKI_IMAGE_NAME="us-west1-xwiki-img-cadf6712-c757-47c5-b9b4-71744e803864"
 fi
 
-cat << EOF > ../config/terraform.tfvars
+cat << EOF > ../infra/terraform.tfvars
 availability_type = "REGIONAL"
 xwiki_sql_user_password = "$XWIKI_SQL_USER_PASSWORD"
 firewall_source_ranges = [

@@ -21,7 +21,7 @@ module "networking" {
   depends_on = [
     module.project_services
   ]
-  source                 = "./tf_modules/networking"
+  source                 = "./modules/networking"
   project_id             = var.project_id
   region                 = var.location["region"]
   firewall_source_ranges = var.firewall_source_ranges
@@ -32,7 +32,7 @@ module "database" {
   depends_on = [
     module.project_services
   ]
-  source                  = "./tf_modules/database"
+  source                  = "./modules/database"
   xwiki_sql_user_password = var.xwiki_sql_user_password
   project_id              = var.project_id
   region                  = var.location["region"]
@@ -45,7 +45,7 @@ module "filestore" {
   depends_on = [
     module.project_services
   ]
-  source          = "./tf_modules/filestore"
+  source          = "./modules/filestore"
   region          = var.location["region"]
   zone            = var.location["zones"][0]
   private_network = module.networking.xwiki_private_network
@@ -84,7 +84,7 @@ module "vm" {
   depends_on = [
     module.project_services
   ]
-  source = "./tf_modules/vm"
+  source = "./modules/vm"
 
   region          = var.location["region"]
   zones           = var.location["zones"]
@@ -105,7 +105,7 @@ module "vm" {
     ]
   }
   startup_script = templatefile(
-    "./templates/startup_script.tftpl",
+    "${path.module}/templates/startup_script.tftpl",
     {
       db_ip                    = "${module.database.db_ip}",
       file_store_ip            = "${module.filestore.filestore_ip}",
@@ -128,7 +128,7 @@ module "load_balancer" {
   depends_on = [
     module.project_services
   ]
-  source = "./tf_modules/load-balancer"
+  source = "./modules/load-balancer"
 
   project_id         = var.project_id
   region             = var.location["region"]
@@ -138,5 +138,5 @@ module "load_balancer" {
 }
 
 resource "google_monitoring_dashboard" "xwiki" {
-  dashboard_json = file("./xwiki_gce_monitor_dashboard.json")
+  dashboard_json = file("${path.module}/files/xwiki_gce_monitor_dashboard.json")
 }

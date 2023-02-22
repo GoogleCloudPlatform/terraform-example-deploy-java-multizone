@@ -10,13 +10,13 @@ if [[ -z $DATADOG_API_KEY || -z $DATADOG_APP_KEY ]]; then
 fi
 
 # Append datadog variable to terraform.tfvars
-cat << EOF >> ../config/terraform.tfvars
+cat << EOF >> ../infra/terraform.tfvars
 datadog_api_key = "$DATADOG_API_KEY"
 datadog_app_key = "$DATADOG_APP_KEY"
 EOF
 
 # Append datadog variable to provider.tf
-cat << EOF >> ../config/provider.tf
+cat << EOF >> ../infra/provider.tf
 
 provider "datadog" {
   api_key = var.datadog_api_key
@@ -25,7 +25,7 @@ provider "datadog" {
 EOF
 
 # Append datadog variable to variable.tf
-cat << \EOF >> ../config/variables.tf
+cat << \EOF >> ../infra/variables.tf
 
 
 variable "datadog_api_key" {
@@ -50,7 +50,7 @@ variable "datadog_app_key" {
 EOF
 
 # Generate datadog terraform code to datadog.tf
-cat << \EOF > ../config/datadog.tf
+cat << \EOF > ../infra/datadog.tf
 resource "google_service_account" "datadog" {
   depends_on = [
     module.project_services

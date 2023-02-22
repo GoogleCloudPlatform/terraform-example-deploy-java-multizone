@@ -63,12 +63,12 @@ steps:
 #      - .
 
   - name: "hashicorp/terraform"
-    dir: "config"
+    dir: "infra"
     args:
       - init
 
   - name: "hashicorp/terraform"
-    dir: "config"
+    dir: "infra"
     args:
       - apply
       - -var
