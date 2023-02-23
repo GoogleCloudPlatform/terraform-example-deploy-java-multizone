@@ -32,6 +32,7 @@ module "project_services" {
     "iam.googleapis.com",
     "servicenetworking.googleapis.com",
     "sqladmin.googleapis.com",
+    "secretmanager.googleapis.com",
   ]
 }
 
@@ -51,12 +52,12 @@ module "networking" {
 module "database" {
   source = "./modules/database"
 
-  xwiki_sql_user_password = var.xwiki_sql_user_password
   project_id              = var.project_id
   region                  = var.location["region"]
   zones                   = var.location["zones"]
   private_network         = module.networking.xwiki_private_network
   availability_type       = var.availability_type
+  service_account         = var.vm_sa_email
 
   depends_on = [
     module.project_services
@@ -114,6 +115,7 @@ module "vm" {
   service_account = {
     email = var.vm_sa_email
     scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring.write",
@@ -130,7 +132,8 @@ module "vm" {
       db_ip                    = module.database.db_ip,
       file_store_ip            = module.filestore.filestore_ip,
       xwiki_db_username        = module.database.xwiki_user.name
-      xwiki_db_password        = module.database.xwiki_user.password
+      gcp_project              = var.project_id
+      xwiki_db_password_secret = module.database.password_secret
       jgroup_bucket_name       = google_storage_bucket.xwiki_jgroup.name,
       jgroup_bucket_access_key = google_storage_hmac_key.jgroup.access_id,
       jgroup_bucket_secret_key = google_storage_hmac_key.jgroup.secret,

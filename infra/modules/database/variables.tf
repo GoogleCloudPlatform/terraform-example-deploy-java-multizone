@@ -34,11 +34,6 @@ variable "private_network" {
   type        = any
 }
 
-variable "xwiki_sql_user_password" {
-  description = "Default password for user xwiki"
-  type        = string
-}
-
 variable "availability_type" {
   description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
   type        = string
@@ -46,4 +41,9 @@ variable "availability_type" {
     condition     = contains(["REGIONAL", "ZONAL"], var.availability_type)
     error_message = "Allowed values for type are \"REGIONAL\", \"ZONAL\"."
   }
+}
+
+variable "service_account" {
+  description = "Service Account which should have read permission to access the database password."
+  type        = string
 }

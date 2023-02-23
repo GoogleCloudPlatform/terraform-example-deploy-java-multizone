@@ -51,7 +51,7 @@ resource "google_sql_database" "xwiki" {
 resource "google_sql_user" "xwiki" {
   name     = "xwiki"
   instance = google_sql_database_instance.xwiki.name
-  password = var.xwiki_sql_user_password
+  password = random_password.sql_password.result
 }
 
 resource "google_compute_global_address" "sql" {
@@ -60,6 +60,37 @@ resource "google_compute_global_address" "sql" {
   address_type  = "INTERNAL"
   prefix_length = 20
   network       = var.private_network.name
+}
+
+resource "random_password" "sql_password" {
+  length      = 20
+  min_lower   = 4
+  min_numeric = 4
+  min_special = 4
+  min_upper   = 4
+  override_special = "!@#*()-_=+[]{}:?"
+}
+
+resource "google_secret_manager_secret" "sql_password" {
+  secret_id = "xwiki-db-password"
+  project   = var.project_id
+
+  replication {
+    automatic = true
+  }
+}
+
+resource "google_secret_manager_secret_version" "sql_password" {
+  secret      = google_secret_manager_secret.sql_password.id
+  enabled     = true
+  secret_data = random_password.sql_password.result
+}
+
+resource "google_secret_manager_secret_iam_member" "sql_password" {
+  project   = google_secret_manager_secret.sql_password.project
+  secret_id = google_secret_manager_secret.sql_password.secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${var.service_account}"
 }
 
 resource "google_service_networking_connection" "private_vpc" {

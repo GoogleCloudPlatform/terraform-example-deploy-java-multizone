@@ -50,11 +50,6 @@ variable "vm_sa_email" {
   }
 }
 
-variable "xwiki_sql_user_password" {
-  description = "Default password for user xwiki"
-  type        = string
-}
-
 variable "firewall_source_ranges" {
   description = "The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format."
   type        = list(string)

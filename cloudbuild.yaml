@@ -3,7 +3,7 @@ steps:
     id: validate_tfvars
     dir: "tools"
     entrypoint: "bash"
-    args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE1}', '${_ZONE2}']
+    args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_ZONE1}', '${_ZONE2}']
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: enable_api
@@ -24,43 +24,13 @@ steps:
     id: prepare_tfvars
     dir: "tools"
     entrypoint: "bash"
-    args: ['prepare_tfvars.sh', '$LOCATION', '${_XWIKI_SQL_USER_PASSWORD}', '${_ZONE1}', '${_ZONE2}']
+    args: ['prepare_tfvars.sh', '$LOCATION', '${_ZONE1}', '${_ZONE2}']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: prepare_datadog_terraform
     dir: 'tools'
     entrypoint: 'bash'
     args: [ 'prepare_datadog_tf.sh', '${_DATADOG_API_KEY}', '${_DATADOG_APP_KEY}']
-
-#  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
-#    dir: 'backend/config'
-#    args:
-#      - init
-#      - .
-#
-#  - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
-#    dir: 'backend/config'
-#    args:
-#      - build
-#      - -var
-#      - project_id=$PROJECT_ID
-#      - -var
-#      - region=$LOCATION
-#      - -var
-#      - zone_code=${_ZONE_CODE1}
-#      - -var
-#      - xwiki_img_name=$LOCATION-xwiki-01t-img-$BUILD_ID
-#      - -var
-#      - img_desc=XWiki image from Packer which trigger by cloudbuild
-#      - -var
-#      - file_sources_tcp=./tcp_gcp.xml
-#      - -var
-#      - file_sources_hibernate=./hibernate_gcp.cfg.xml
-#      - -var
-#      - file_sources_startup_sh=../tools/xwiki_startup.sh
-#      - -var
-#      - deploy_sh=../tools/xwiki_manual_deploy_gcp.sh
-#      - .
 
   - name: "hashicorp/terraform"
     dir: "infra"
@@ -82,7 +52,6 @@ steps:
 substitutions:
   _DATADOG_API_KEY: ""
   _DATADOG_APP_KEY: ""
-  _XWIKI_SQL_USER_PASSWORD: "vuYTCazG0IcEc"
 
 options:
   logging: CLOUD_LOGGING_ONLY

@@ -74,6 +74,22 @@ resource "google_compute_firewall" "ssh_rule" {
   ]
 }
 
+resource "google_compute_firewall" "internal_rule" {
+  name    = "xwiki-allow-internal"
+  network = google_compute_network.xwiki.name
+  allow {
+    protocol = "tcp"
+    ports = [
+      "0-65535",
+    ]
+  }
+  source_ranges = ["10.128.0.0/9", ]
+  target_tags = [
+    var.xwiki_vm_tag,
+  ]
+}
+
+
 resource "google_compute_router" "xwiki" {
   name    = "xwiki-router"
   region  = var.region

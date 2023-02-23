@@ -23,3 +23,8 @@ output "xwiki_user" {
   description = "SQL username for XWiki"
   value       = google_sql_user.xwiki
 }
+
+output "password_secret" {
+  description = "Name of the secret storing the database password"
+  value       = google_secret_manager_secret.sql_password.secret_id
+}
