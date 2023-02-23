@@ -35,11 +35,11 @@ func TestSimpleExample(t *testing.T) {
 
 		// check if cloud run service exists
 		projectID := example.GetTFSetupStringOutput("project_id")
-		vmName := example.GetStringOutput("xwiki_vm_name")
+		migSelflink := example.GetStringOutput("xwiki_mig_self_link")
 
 		// sample assertion to validate VM is running
-		opVM := gcloud.Runf(t, "compute instances describe %s --zone us-central1-a --project %s", vmName, projectID)
-		assert.Equal("RUNNING", opVM.Get("status").String(), "expected XWiki VM to be running")
+		opVM := gcloud.Runf(t, "compute instance-groups managed describe %s --region us-central1 --project %s", migSelflink, projectID)
+		assert.Equal("ACTIVE", opVM.Get("autoscaler.status").String(), "expected XWiki MIG autoscaler to be active")
 
 		// sample e2e to assert app is working
 		wikiURL := example.GetStringOutput("xwiki_url")
@@ -51,7 +51,7 @@ func TestSimpleExample(t *testing.T) {
 			}
 			return false, nil
 		}
-		utils.Poll(t, isServing, 10, time.Second*10)
+		utils.Poll(t, isServing, 20, time.Second*20)
 	})
 	example.Test()
 }

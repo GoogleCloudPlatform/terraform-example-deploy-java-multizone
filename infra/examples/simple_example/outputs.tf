@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-output "xwiki_vm_name" {
-  value = module.simple.xwiki_vm_name
+output "xwiki_mig_self_link" {
+  value = module.simple.xwiki_mig_self_link
 }
 
 output "xwiki_url" {
-  value = module.simple.xwiki_url
+  value = module.simple.xwiki_entrypoint_url
 }

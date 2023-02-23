@@ -19,14 +19,14 @@ module "simple" {
   project_id = var.project_id
   location = {
     region = "us-central1"
-    zone   = "us-central1-a"
+    zones  = ["us-central1-a", "us-central1-f"]
   }
   availability_type       = "ZONAL"
   vm_sa_email             = google_service_account.service_account.email
   xwiki_sql_user_password = random_password.password.result
   firewall_source_ranges  = ["0.0.0.0/0"]
   xwiki_img_info = {
-    image_name    = "us-west1-xwiki-01t-img-efab2b30-5982-4ba0-a115-ffde4eee0434"
+    image_name    = "us-west1-xwiki-img-cadf6712-c757-47c5-b9b4-71744e803864"
     image_project = "migrate-legacy-java-app-gce"
   }
 }
