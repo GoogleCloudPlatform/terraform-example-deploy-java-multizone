@@ -13,6 +13,11 @@
 # limitations under the License.
 
 steps:
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: "Remove Xwiki app image"
+    entrypoint: "gcloud"
+    args: ['compute', 'images', 'delete', 'hsa-xwiki-vm-img-latest']
+
   - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
     dir: 'backend/config'
     args:
@@ -30,7 +35,7 @@ steps:
       - -var
       - zone=${_ZONE}
       - -var
-      - xwiki_img_name=$LOCATION-xwiki-img-$BUILD_ID
+      - xwiki_img_name=hsa-xwiki-vm-img-latest
       - -var
       - img_desc=XWiki image from Packer which is triggered by Cloud Build
       - -var
@@ -53,7 +58,7 @@ steps:
       - LOCATION=$LOCATION
       - BUILD_ID=$BUILD_ID
     script: |
-      gcloud compute images add-iam-policy-binding $LOCATION-xwiki-img-$BUILD_ID --member='allAuthenticatedUsers' --role='roles/compute.imageUser'
+      gcloud compute images add-iam-policy-binding hsa-xwiki-vm-img-latest --member='allAuthenticatedUsers' --role='roles/compute.imageUser'
 
 substitutions:
   _XWIKI_MIGRATE_FILE_BUCKET: ""
