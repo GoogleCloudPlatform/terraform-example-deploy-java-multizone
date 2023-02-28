@@ -17,6 +17,7 @@
 locals {
   xwiki_vm_tag       = "xwiki-${var.location["region"]}-autoscale"
   xwiki_lb_port_name = "xwiki-bkend-port"
+  vm_sa_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
 module "project_services" {
@@ -57,7 +58,7 @@ module "database" {
   zones                   = var.location["zones"]
   private_network         = module.networking.xwiki_private_network
   availability_type       = var.availability_type
-  service_account         = var.vm_sa_email
+  service_account         = local.vm_sa_email
 
   depends_on = [
     module.project_services
@@ -86,7 +87,7 @@ resource "google_service_account" "jgroup" {
 
 resource "google_project_iam_member" "jgroup_permission" {
   project = var.project_id
-  role    = "roles/owner"
+  role    = "roles/storage.hmacKeyAdmin"
   member  = "serviceAccount:${google_service_account.jgroup.email}"
 }
 
@@ -113,7 +114,7 @@ module "vm" {
   xwiki_vm_tag    = local.xwiki_vm_tag
   project_id      = var.project_id
   service_account = {
-    email = var.vm_sa_email
+    email = local.vm_sa_email
     scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/devstorage.read_only",

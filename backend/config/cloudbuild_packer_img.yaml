@@ -13,11 +13,6 @@
 # limitations under the License.
 
 steps:
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    id: "Remove Xwiki app image"
-    entrypoint: "gcloud"
-    args: ['compute', 'images', 'delete', 'hsa-xwiki-vm-img-latest']
-
   - name: 'gcr.io/migrate-legacy-java-app-gce/packer'
     dir: 'backend/config'
     args:

@@ -30,35 +30,40 @@ variable "location" {
     zones  = list(string)
     }
   )
+  default = {
+    region     = "us-west1"
+    zones      = ["us-west1-a", "us-west1-b"]
+  }
 }
 
 variable "availability_type" {
   description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
   type        = string
+  default = "REGIONAL"
   validation {
     condition     = contains(["REGIONAL", "ZONAL"], var.availability_type)
     error_message = "Allowed values for type are \"REGIONAL\", \"ZONAL\"."
   }
 }
 
-variable "vm_sa_email" {
-  description = "Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles."
-  type        = string
-  validation {
-    condition     = var.vm_sa_email != ""
-    error_message = "Error: vm_sa_email is required"
-  }
-}
-
 variable "firewall_source_ranges" {
   description = "The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format."
   type        = list(string)
+  default = [
+    //Health check service ip
+    "130.211.0.0/22",
+    "35.191.0.0/16",
+  ]
 }
 
 variable "xwiki_img_info" {
   description = "Xwiki app image information."
   type = object({
-    image_name    = string
     image_project = string
+    image_name    = string
   })
+  default = {
+    image_project = "hsa-public"
+    image_name = "hsa-xwiki-vm-img-latest"
+  }
 }
