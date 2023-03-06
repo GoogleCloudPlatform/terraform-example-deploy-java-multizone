@@ -63,11 +63,11 @@ resource "google_compute_global_address" "sql" {
 }
 
 resource "random_password" "sql_password" {
-  length      = 20
-  min_lower   = 4
-  min_numeric = 4
-  min_special = 4
-  min_upper   = 4
+  length           = 20
+  min_lower        = 4
+  min_numeric      = 4
+  min_special      = 4
+  min_upper        = 4
   override_special = "!@#*()-_=+[]{}:?"
 }
 

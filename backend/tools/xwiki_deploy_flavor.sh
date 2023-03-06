@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+## Global Config
 DB_HOST=${1}
 DB_USER=${2}
 DB_PASSWORD=${3}
@@ -24,8 +24,8 @@ MYSQL_IMPORT_SQL_FILE="xwiki_bk_14.10.sql"
 NFS_SHARE_FILE="file_${VERSION}.tar.gz"
 XWIKI_DATA_DIR="/var/lib/xwiki/data"
 FLAVOR_LOG_PREFIX="Deploy_flavor:"
-LOCK_FILE="${XWIKI_DATA_DIR}/store/import.lock"
-IMPORTED="${XWIKI_DATA_DIR}/store/imported"
+LOCK_FILE="${XWIKI_DATA_DIR}/store/file/import.lock"
+IMPORTED="${XWIKI_DATA_DIR}/store/file/imported"
 
 Migrate_Data() {
   (
@@ -73,7 +73,6 @@ Migrate_Data() {
       fi
       echo "${FLAVOR_LOG_PREFIX} Data migration has completed."
       date > ${IMPORTED}
-      sleep 3
     fi
   ) 200>$LOCK_FILE
 }
@@ -95,7 +94,7 @@ done
 Migrate_Data
 if [ $? -eq 1 ]; then
   echo "${FLAVOR_LOG_PREFIX} Data migration is in progress."
-  RETRY_INTERVAL=60
+  RETRY_INTERVAL=120
   retries=0
   while true; do
     retries=$((retries+1))

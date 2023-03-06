@@ -31,15 +31,15 @@ variable "location" {
     }
   )
   default = {
-    region     = "us-west1"
-    zones      = ["us-west1-a", "us-west1-b"]
+    region = "us-west1"
+    zones  = ["us-west1-a", "us-west1-b"]
   }
 }
 
 variable "availability_type" {
   description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
   type        = string
-  default = "REGIONAL"
+  default     = "REGIONAL"
   validation {
     condition     = contains(["REGIONAL", "ZONAL"], var.availability_type)
     error_message = "Allowed values for type are \"REGIONAL\", \"ZONAL\"."
@@ -64,6 +64,6 @@ variable "xwiki_img_info" {
   })
   default = {
     image_project = "hsa-public"
-    image_name = "hsa-xwiki-vm-img-latest"
+    image_name    = "hsa-xwiki-vm-img-latest"
   }
 }

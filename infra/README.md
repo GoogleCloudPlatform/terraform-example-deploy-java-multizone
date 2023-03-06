@@ -20,13 +20,11 @@ Sample HSA infrastructure detailed description.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| availability\_type | The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL). | `string` | n/a | yes |
-| firewall\_source\_ranges | The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format. | `list(string)` | n/a | yes |
-| location | location contains a region and a list of zones (at least 2 zones must be selected). Zones depends on the region chosen. | <pre>object({<br>    region = string<br>    zones  = list(string)<br>    }<br>  )</pre> | n/a | yes |
+| availability\_type | The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL). | `string` | `"REGIONAL"` | no |
+| firewall\_source\_ranges | The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format. | `list(string)` | <pre>[<br>  "130.211.0.0/22",<br>  "35.191.0.0/16"<br>]</pre> | no |
+| location | location contains a region and a list of zones (at least 2 zones must be selected). Zones depends on the region chosen. | <pre>object({<br>    region = string<br>    zones  = list(string)<br>    }<br>  )</pre> | <pre>{<br>  "region": "us-west1",<br>  "zones": [<br>    "us-west1-a",<br>    "us-west1-b"<br>  ]<br>}</pre> | no |
 | project\_id | GCP project ID. | `string` | n/a | yes |
-| vm\_sa\_email | Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles. | `string` | n/a | yes |
-| xwiki\_img\_info | Xwiki app image information. | <pre>object({<br>    image_name    = string<br>    image_project = string<br>  })</pre> | n/a | yes |
-| xwiki\_sql\_user\_password | Default password for user xwiki | `string` | n/a | yes |
+| xwiki\_img\_info | Xwiki app image information. | <pre>object({<br>    image_project = string<br>    image_name    = string<br>  })</pre> | <pre>{<br>  "image_name": "hsa-xwiki-vm-img-latest",<br>  "image_project": "hsa-public"<br>}</pre> | no |
 
 ## Outputs
 
