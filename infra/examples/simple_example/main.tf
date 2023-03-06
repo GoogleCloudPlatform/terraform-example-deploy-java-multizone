@@ -21,22 +21,10 @@ module "simple" {
     region = "us-central1"
     zones  = ["us-central1-a", "us-central1-f"]
   }
-  availability_type       = "ZONAL"
-  vm_sa_email             = google_service_account.service_account.email
-  xwiki_sql_user_password = random_password.password.result
-  firewall_source_ranges  = ["0.0.0.0/0"]
+  availability_type      = "ZONAL"
+  firewall_source_ranges = ["0.0.0.0/0"]
   xwiki_img_info = {
     image_name    = "us-west1-xwiki-img-cadf6712-c757-47c5-b9b4-71744e803864"
     image_project = "migrate-legacy-java-app-gce"
   }
-}
-
-resource "random_password" "password" {
-  length = 8
-}
-
-resource "google_service_account" "service_account" {
-  account_id   = "xwiki-compute"
-  display_name = "XWiki Compute SA"
-  project      = var.project_id
 }
