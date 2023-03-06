@@ -19,7 +19,7 @@ variable "zone" {
   type        = string
 }
 
-variable "private_network" {
-  description = "VPC name"
-  type        = any
+variable "private_network_id" {
+  description = "VPC id"
+  type        = string
 }

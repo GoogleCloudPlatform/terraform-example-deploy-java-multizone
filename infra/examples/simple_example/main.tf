@@ -15,16 +15,14 @@
  */
 
 module "simple" {
-  source     = "../../"
-  project_id = var.project_id
-  location = {
-    region = "us-central1"
-    zones  = ["us-central1-a", "us-central1-f"]
-  }
+  source                 = "../../"
+  project_id             = var.project_id
+  region                 = "us-central1"
+  zones                  = ["us-central1-a", "us-central1-f"]
   availability_type      = "ZONAL"
   firewall_source_ranges = ["0.0.0.0/0"]
   xwiki_img_info = {
-    image_name    = "us-west1-xwiki-img-cadf6712-c757-47c5-b9b4-71744e803864"
+    image_name    = "hsa-xwiki-vm-img-latest"
     image_project = "migrate-legacy-java-app-gce"
   }
 }

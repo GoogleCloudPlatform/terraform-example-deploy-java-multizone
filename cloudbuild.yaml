@@ -17,7 +17,7 @@ steps:
     id: validate_tfvars
     dir: "tools"
     entrypoint: "bash"
-    args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_ZONE1}', '${_ZONE2}']
+    args: ['validate_tfvars.sh', '${PROJECT_ID}', '${LOCATION}', '${_ZONES}']
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: enable_api
@@ -38,7 +38,7 @@ steps:
     id: prepare_tfvars
     dir: "tools"
     entrypoint: "bash"
-    args: ['prepare_tfvars.sh', '$LOCATION', '${_ZONE1}', '${_ZONE2}']
+    args: ['prepare_tfvars.sh', '$LOCATION', '${_ZONES}']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: prepare_datadog_terraform
@@ -59,7 +59,6 @@ steps:
       - project_id=$PROJECT_ID
       - -var-file=terraform.tfvars
       - -auto-approve
-
 
 substitutions:
   _DATADOG_API_KEY: ""

@@ -21,13 +21,13 @@ SQL_USER_PASSWORD=$3
 FILESTORE_IP_ADDRESS=$4
 
 Config_Xwiki(){
-    echo "-----Config jgroup setting to XWiki -----"
-    sudo su -c "echo -e \"observation.remote.enabled = true \nobservation.remote.channels = tcp \" | tee -a /etc/xwiki/xwiki.properties"
+  echo "-----Config jgroup setting to XWiki -----"
+  sudo su -c "echo -e \"observation.remote.enabled = true \nobservation.remote.channels = tcp \" | tee -a /etc/xwiki/xwiki.properties"
 
-    echo "-----Config Mysql connection setting to Xwiki -----"
-    sudo su -c "sed -i \"s/jdbc:mysql:\/\/xwiki-sql-db/jdbc:mysql:\/\/${SQL_ENDPOINT}/g\" /etc/xwiki/hibernate.cfg.xml"
-    sudo su -c "sed -i \"s/xwiki-sql-db-username/${SQL_USER_NAME}/g\" /etc/xwiki/hibernate.cfg.xml"
-    sudo su -c "sed -i \"s/xwiki-sql-db-password/${SQL_USER_PASSWORD}/g\" /etc/xwiki/hibernate.cfg.xml"
+  echo "-----Config Mysql connection setting to Xwiki -----"
+  sudo su -c "sed -i \"s/jdbc:mysql:\/\/xwiki-sql-db/jdbc:mysql:\/\/${SQL_ENDPOINT}/g\" /etc/xwiki/hibernate.cfg.xml"
+  sudo su -c "sed -i \"s/xwiki-sql-db-username/${SQL_USER_NAME}/g\" /etc/xwiki/hibernate.cfg.xml"
+  sudo su -c "sed -i \"s/xwiki-sql-db-password/${SQL_USER_PASSWORD}/g\" /etc/xwiki/hibernate.cfg.xml"
 }
 
 Config_NFS_Xwiki(){

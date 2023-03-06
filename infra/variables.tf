@@ -23,17 +23,14 @@ variable "project_id" {
   }
 }
 
-variable "location" {
-  description = "location contains a region and a list of zones (at least 2 zones must be selected). Zones depends on the region chosen."
-  type = object({
-    region = string
-    zones  = list(string)
-    }
-  )
-  default = {
-    region = "us-west1"
-    zones  = ["us-west1-a", "us-west1-b"]
-  }
+variable "region" {
+  description = "Compute Region to deploy to."
+  type        = string
+}
+
+variable "zones" {
+  description = "Compute Zones to deploy to."
+  type        = list(string)
 }
 
 variable "availability_type" {
