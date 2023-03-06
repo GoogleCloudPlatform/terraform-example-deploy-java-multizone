@@ -27,7 +27,7 @@ module "instance_template" {
   tags = [
     var.xwiki_vm_tag,
   ]
-  network = var.private_network.name
+  network = var.private_network_id
   service_account = {
     email  = var.service_account.email
     scopes = var.service_account.scopes

@@ -20,8 +20,8 @@ BUCKET_NAME=tf-backend-xwiki-gce-`gcloud projects list --filter PROJECT_ID=$PROJ
 gcloud storage buckets describe gs://$BUCKET_NAME
 status=$?
 if [ $status -eq 0 ]; then
-        echo "bucket exists"
+  echo "bucket exists"
 else
-        echo "bucket does not exist. Creating bucket by gcloud command."
-        gcloud storage buckets create gs://$BUCKET_NAME
+  echo "bucket does not exist. Creating bucket by gcloud command."
+  gcloud storage buckets create gs://$BUCKET_NAME
 fi

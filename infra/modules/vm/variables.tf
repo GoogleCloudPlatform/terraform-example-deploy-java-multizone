@@ -29,9 +29,9 @@ variable "zones" {
   type        = list(string)
 }
 
-variable "private_network" {
-  description = "Private VPC network"
-  type        = any
+variable "private_network_id" {
+  description = "VPC id"
+  type        = string
 }
 
 variable "xwiki_vm_tag" {

@@ -15,9 +15,19 @@
  */
 
 locals {
-  xwiki_vm_tag       = "xwiki-${var.location["region"]}-autoscale"
+  xwiki_vm_tag       = "xwiki-${var.region}-autoscale"
   xwiki_lb_port_name = "xwiki-bkend-port"
   vm_sa_email        = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  zones_base = {
+    default = data.google_compute_zones.available.names
+    user    = compact(var.zones)
+  }
+  zones = local.zones_base[length(compact(var.zones)) == 0 ? "default" : "user"]
+}
+
+data "google_compute_zones" "available" {
+  project = var.project_id
+  region  = var.region
 }
 
 module "project_services" {
@@ -40,10 +50,14 @@ module "project_services" {
 module "networking" {
   source = "./modules/networking"
 
-  project_id             = var.project_id
-  region                 = var.location["region"]
-  firewall_source_ranges = var.firewall_source_ranges
-  xwiki_vm_tag           = local.xwiki_vm_tag
+  project_id = var.project_id
+  region     = var.region
+  firewall_source_ranges = concat(
+    [module.load_balancer.lb_global_ip],
+    # Health check service ip
+    var.firewall_source_ranges
+  )
+  xwiki_vm_tag = local.xwiki_vm_tag
 
   depends_on = [
     module.project_services
@@ -53,12 +67,11 @@ module "networking" {
 module "database" {
   source = "./modules/database"
 
-  project_id        = var.project_id
-  region            = var.location["region"]
-  zones             = var.location["zones"]
-  private_network   = module.networking.xwiki_private_network
-  availability_type = var.availability_type
-  service_account   = local.vm_sa_email
+  project_id         = var.project_id
+  region             = var.region
+  private_network_id = module.networking.xwiki_private_network.id
+  availability_type  = var.availability_type
+  service_account    = local.vm_sa_email
 
   depends_on = [
     module.project_services
@@ -68,8 +81,8 @@ module "database" {
 module "filestore" {
   source = "./modules/filestore"
 
-  zone            = var.location["zones"][0]
-  private_network = module.networking.xwiki_private_network
+  zone               = local.zones[0]
+  private_network_id = module.networking.xwiki_private_network.id
 
   depends_on = [
     module.project_services
@@ -98,7 +111,7 @@ resource "google_storage_hmac_key" "jgroup" {
 resource "google_storage_bucket" "xwiki_jgroup" {
   project       = var.project_id
   name          = "xwiki-jgroup-${data.google_project.project.number}"
-  location      = var.location["region"]
+  location      = var.region
   force_destroy = true
   depends_on = [
     module.project_services
@@ -108,11 +121,11 @@ resource "google_storage_bucket" "xwiki_jgroup" {
 module "vm" {
   source = "./modules/vm"
 
-  region          = var.location["region"]
-  zones           = var.location["zones"]
-  private_network = module.networking.xwiki_private_network
-  xwiki_vm_tag    = local.xwiki_vm_tag
-  project_id      = var.project_id
+  region             = var.region
+  zones              = local.zones
+  private_network_id = module.networking.xwiki_private_network.id
+  xwiki_vm_tag       = local.xwiki_vm_tag
+  project_id         = var.project_id
   service_account = {
     email = local.vm_sa_email
     scopes = [
@@ -153,7 +166,6 @@ module "load_balancer" {
   project_id         = var.project_id
   xwiki_mig          = module.vm.xwiki_mig
   xwiki_lb_port_name = local.xwiki_lb_port_name
-  lb_ip              = module.networking.global_addresses[0]
 
   depends_on = [
     module.project_services

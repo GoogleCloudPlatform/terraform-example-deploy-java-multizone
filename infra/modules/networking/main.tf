@@ -14,34 +14,11 @@
  * limitations under the License.
  */
 
-locals {
-  source_ranges = concat(
-    [
-      module.global_addresses.addresses[0],
-    ],
-    var.firewall_source_ranges
-  )
-}
-
 resource "google_compute_network" "xwiki" {
   provider                = google
   name                    = "xwiki"
   auto_create_subnetworks = true
   project                 = var.project_id
-}
-
-module "global_addresses" {
-  source  = "terraform-google-modules/address/google"
-  version = "3.1.1"
-
-  project_id = var.project_id
-  region     = var.region
-  // module default is INTERNAL. but resource default is EXTERNAL
-  address_type = "EXTERNAL"
-  global       = true
-  names = [
-    "xwiki-${var.region}-lb-http-8080-ip",
-  ]
 }
 
 resource "google_compute_firewall" "http_rule" {
@@ -53,7 +30,8 @@ resource "google_compute_firewall" "http_rule" {
       "8080",
     ]
   }
-  source_ranges = local.source_ranges
+  # Health check service ip and Load balancer ip
+  source_ranges = var.firewall_source_ranges
   target_tags = [
     var.xwiki_vm_tag,
   ]
@@ -68,6 +46,7 @@ resource "google_compute_firewall" "ssh_rule" {
       "22",
     ]
   }
+  # IAP TCP forwarding IP range.
   source_ranges = ["35.235.240.0/20", ]
   target_tags = [
     var.xwiki_vm_tag,
@@ -83,12 +62,12 @@ resource "google_compute_firewall" "internal_rule" {
       "0-65535",
     ]
   }
+  # xwiki VPC network internal IP range.
   source_ranges = ["10.128.0.0/9", ]
   target_tags = [
     var.xwiki_vm_tag,
   ]
 }
-
 
 resource "google_compute_router" "xwiki" {
   name    = "xwiki-router"

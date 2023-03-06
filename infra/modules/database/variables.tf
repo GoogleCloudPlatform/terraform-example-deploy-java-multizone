@@ -24,14 +24,9 @@ variable "region" {
   type        = string
 }
 
-variable "zones" {
-  description = "A list of zones that DB location_preference can be placed in. The list depends on the region chosen."
-  type        = list(string)
-}
-
-variable "private_network" {
-  description = "VPC name"
-  type        = any
+variable "private_network_id" {
+  description = "VPC id"
+  type        = string
 }
 
 variable "availability_type" {

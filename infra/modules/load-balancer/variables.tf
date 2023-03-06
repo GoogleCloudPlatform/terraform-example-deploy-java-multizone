@@ -29,8 +29,3 @@ variable "xwiki_mig" {
   description = "Xwiki managed instance group"
   type        = any
 }
-
-variable "lb_ip" {
-  description = "The IP address for load-balancer."
-  type        = string
-}

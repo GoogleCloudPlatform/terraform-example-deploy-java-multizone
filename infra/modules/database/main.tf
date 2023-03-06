@@ -24,15 +24,11 @@ resource "google_sql_database_instance" "xwiki" {
       enabled            = true
       binary_log_enabled = true
     }
-    location_preference {
-      zone           = var.zones[0]
-      secondary_zone = var.zones[1]
-    }
     tier      = "db-custom-2-4096"
     disk_type = "PD_SSD"
     disk_size = 20
     ip_configuration {
-      private_network = "projects/${var.project_id}/global/networks/${var.private_network.name}"
+      private_network = var.private_network_id
       ipv4_enabled    = false
     }
   }
@@ -59,7 +55,7 @@ resource "google_compute_global_address" "sql" {
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 20
-  network       = var.private_network.name
+  network       = var.private_network_id
 }
 
 resource "random_password" "sql_password" {
@@ -94,7 +90,7 @@ resource "google_secret_manager_secret_iam_member" "sql_password" {
 }
 
 resource "google_service_networking_connection" "private_vpc" {
-  network = var.private_network.name
+  network = var.private_network_id
   service = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [
     google_compute_global_address.sql.name,

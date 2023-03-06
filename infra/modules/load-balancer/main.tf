@@ -17,18 +17,8 @@
 resource "google_compute_backend_service" "xwiki_lb" {
   project               = var.project_id
   load_balancing_scheme = "EXTERNAL_MANAGED"
-  enable_cdn            = true
-  cdn_policy {
-    cache_key_policy {
-      include_host         = true
-      include_protocol     = true
-      include_query_string = true
-    }
-    negative_caching  = false
-    serve_while_stale = 0
-  }
-  name      = "xwiki-lb-http-bkend-vm-auto"
-  port_name = var.xwiki_lb_port_name
+  name                  = "xwiki-lb-http-bkend-vm-auto"
+  port_name             = var.xwiki_lb_port_name
   backend {
     group           = var.xwiki_mig.instance_group
     max_utilization = 0.8
@@ -47,9 +37,13 @@ resource "google_compute_global_forwarding_rule" "xwiki_lb_http_frontend" {
   project               = var.project_id
   load_balancing_scheme = "EXTERNAL_MANAGED"
   name                  = "xwiki-lb-http-frontend"
-  ip_address            = var.lb_ip
-  port_range            = "8080-8080"
+  ip_address            = google_compute_global_address.xwiki.address
+  port_range            = "80"
   target                = google_compute_target_http_proxy.xwiki_lb_http.self_link
+}
+
+resource "google_compute_global_address" "xwiki" {
+  name = "xwiki-lb-http-ip"
 }
 
 resource "google_compute_target_http_proxy" "xwiki_lb_http" {
