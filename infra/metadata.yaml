@@ -32,17 +32,6 @@ spec:
   documentation:
   - title: Architecture Diagram
     url: todo
-  subBlueprints:
-  - name: database
-    location: modules/database
-  - name: filestore
-    location: modules/filestore
-  - name: load-balancer
-    location: modules/load-balancer
-  - name: networking
-    location: modules/networking
-  - name: vm
-    location: modules/vm
   examples:
   - name: simple_example
     location: examples/simple_example
