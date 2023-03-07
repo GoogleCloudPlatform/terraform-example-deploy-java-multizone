@@ -36,7 +36,7 @@ Config_NFS_Xwiki(){
   export MOUNT_FILE_SHARE="/mnt/xwiki_file_share"
 
   mkdir -p /mnt/xwiki_file_share
-  sudo mount ${NFS_FILE_SHARE} ${MOUNT_FILE_SHARE}
+  sudo mount "${NFS_FILE_SHARE}" ${MOUNT_FILE_SHARE}
   sudo test -d ${MOUNT_FILE_SHARE}/file || sudo mkdir -p  ${MOUNT_FILE_SHARE}/file
   sudo test -d ${MOUNT_FILE_SHARE}/extension/repository || sudo mkdir -p ${MOUNT_FILE_SHARE}/extension/repository
   sudo chown -R tomcat:tomcat ${MOUNT_FILE_SHARE}/*
@@ -44,7 +44,7 @@ Config_NFS_Xwiki(){
 
   # For mount store/file to NFS share
   sudo test -d ${XWIKI_DATA_DIR}/store/file || sudo mkdir -p ${XWIKI_DATA_DIR}/store/file
-  sudo mount ${NFS_FILE_SHARE}/file ${XWIKI_DATA_DIR}/store/file
+  sudo mount "${NFS_FILE_SHARE}"/file ${XWIKI_DATA_DIR}/store/file
   df -k | grep store || (echo "Failed to mount folder to NFS" ; exit 1)
   sudo chown -R tomcat:tomcat ${XWIKI_DATA_DIR}/store/
 

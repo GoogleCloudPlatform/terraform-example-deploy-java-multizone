@@ -45,7 +45,7 @@ sudo cp /tmp/hibernate_gcp.cfg.xml /etc/xwiki/hibernate.cfg.xml
 sudo cp /tmp/xwiki_startup.sh /home/xwiki_startup.sh
 sudo cp /tmp/xwiki_deploy_flavor.sh /home/xwiki_deploy_flavor.sh
 
-if [ -z $XWIKI_MIGRATE_FILE_BUCKET ]; then
+if [ -z "${XWIKI_MIGRATE_FILE_BUCKET}" ]; then
   echo "xwiki migrate file bucket empty"
   XWIKI_MIGRATE_FILE_BUCKET="legacy-xwiki-installed-flavor"
 fi

@@ -1,3 +1,4 @@
+#! /bin/bash
 # Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +20,7 @@ ZONES=$3
 if [ -z "$PROJECT_ID" ]; then
   echo "Error: 'PROJECT_ID' is required"
   exit 1
-elif [ -z "$REGION" ] || [ $REGION = "global" ]; then
+elif [ -z "$REGION" ] || [ "${REGION}" = "global" ]; then
   echo "Error: 'REGION' is required, and it cannot be set to 'global'"
   exit 1
 elif [ -z "$ZONES" ]; then
