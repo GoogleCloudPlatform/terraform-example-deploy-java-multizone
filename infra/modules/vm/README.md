@@ -8,18 +8,20 @@ This module deploys the VM instances required for this HSA
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| availability\_type | The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL). | `string` | `"REGIONAL"` | no |
-| firewall\_source\_ranges | The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format. | `list(string)` | <pre>[<br>  "130.211.0.0/22",<br>  "35.191.0.0/16"<br>]</pre> | no |
+| private\_network\_id | VPC id | `string` | n/a | yes |
 | project\_id | GCP project ID. | `string` | n/a | yes |
-| region | Compute Region to deploy to. | `string` | n/a | yes |
-| xwiki\_img\_info | Xwiki app image information. | <pre>object({<br>    image_project = string<br>    image_name    = string<br>  })</pre> | <pre>{<br>  "image_name": "hsa-xwiki-vm-img-latest",<br>  "image_project": "hsa-public"<br>}</pre> | no |
-| zones | Compute Zones to deploy to. | `list(string)` | n/a | yes |
+| region | The region chosen to be used. | `string` | n/a | yes |
+| service\_account | Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles. | <pre>object({<br>    email  = string<br>    scopes = set(string)<br>  })</pre> | n/a | yes |
+| startup\_script | The startup script to run when instances start up | `any` | `""` | no |
+| xwiki\_img\_info | Xwiki app image information. | <pre>object({<br>    image_name    = string<br>    image_project = string<br>  })</pre> | n/a | yes |
+| xwiki\_lb\_port\_name | Xwiki LB backend port name | `string` | n/a | yes |
+| xwiki\_vm\_tag | Tag for targeting FW rule | `string` | n/a | yes |
+| zones | A list of zones that mig can be placed in. The list depends on the region chosen. | `list(string)` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| xwiki\_entrypoint\_url | Shows the URL of XWiki's index page. |
-| xwiki\_mig\_self\_link | MIG hosting XWiki |
+| xwiki\_mig | Xwiki managed instance group |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
