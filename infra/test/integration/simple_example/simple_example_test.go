@@ -38,8 +38,16 @@ func TestSimpleExample(t *testing.T) {
 		migSelflink := example.GetStringOutput("xwiki_mig_self_link")
 
 		// sample assertion to validate VM is running
-		opVM := gcloud.Runf(t, "compute instance-groups managed describe %s --region us-central1 --project %s", migSelflink, projectID)
-		assert.Equal("ACTIVE", opVM.Get("autoscaler.status").String(), "expected XWiki MIG autoscaler to be active")
+		// VM might take a few minutes to transition from pending to active status
+		isActive := func() (bool, error) {
+			vmOP := gcloud.Runf(t, "compute instance-groups managed describe %s --region us-central1 --project %s", migSelflink, projectID)
+			if vmOP.Get("autoscaler.status").String() != "ACTIVE" {
+				// retry
+				return true, nil
+			}
+			return false, nil
+		}
+		utils.Poll(t, isActive, 20, time.Second*20)
 
 		// sample e2e to assert app is working
 		wikiURL := example.GetStringOutput("xwiki_url")
