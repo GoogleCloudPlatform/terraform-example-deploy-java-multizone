@@ -1,0 +1,51 @@
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-example-deploy-java-multizone
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: Java multizone loadbalancer module
+  source:
+    repo: https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone.git
+    sourceType: git
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  description:
+    tagline: This module deploys the loadbalancers required for this HSA
+  examples:
+  - name: simple_example
+    location: examples/simple_example
+  variables:
+  - name: project_id
+    description: GCP project ID in which the auto-scaler group is created in.
+    type: string
+    required: true
+  - name: xwiki_lb_port_name
+    description: Xwiki LB backend port name
+    type: string
+    required: true
+  - name: xwiki_mig
+    description: Xwiki managed instance group
+    type: any
+    required: true
+  outputs:
+  - name: lb_global_ip
+    description: Frontend IP address of the load balancer
+  roles:
+  - level: Project
+    roles:
+    - roles/owner
+  services:
+  - cloudresourcemanager.googleapis.com
+  - iam.googleapis.com
+  - storage.googleapis.com
+  - serviceusage.googleapis.com
+  - compute.googleapis.com
+  - logging.googleapis.com
+  - sqladmin.googleapis.com
+  - cloudbuild.googleapis.com
+  - file.googleapis.com
+  - servicenetworking.googleapis.com
+  - monitoring.googleapis.com
