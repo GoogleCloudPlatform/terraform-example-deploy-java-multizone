@@ -64,3 +64,5 @@ variable "xwiki_img_info" {
     image_name    = "hsa-xwiki-vm-img-latest"
   }
 }
+
+
