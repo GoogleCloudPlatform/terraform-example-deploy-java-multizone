@@ -26,6 +26,9 @@ locals {
 }
 
 data "google_compute_zones" "available" {
+  depends_on = [
+    module.project_services
+  ]
   project = var.project_id
   region  = var.region
 }
