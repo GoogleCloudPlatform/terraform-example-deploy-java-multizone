@@ -26,11 +26,13 @@ variable "project_id" {
 variable "region" {
   description = "Compute Region to deploy to."
   type        = string
+  default     = "us-west1"
 }
 
 variable "zones" {
   description = "Compute Zones to deploy to."
   type        = list(string)
+  default     = ["us-west1-a", "us-west1-b"]
 }
 
 variable "availability_type" {
