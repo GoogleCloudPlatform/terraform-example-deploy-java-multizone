@@ -17,7 +17,19 @@
 locals {
   // TODO: de scope to required roles
   int_required_roles = [
-    "roles/owner"
+    "roles/cloudsql.admin",
+    "roles/file.editor",
+    "roles/iam.serviceAccountUser",
+    "roles/compute.admin",
+    "roles/logging.admin",
+    "roles/monitoring.admin",
+    "roles/resourcemanager.projectIamAdmin",
+    "roles/secretmanager.admin",
+    "roles/iam.serviceAccountAdmin",
+    "roles/servicenetworking.networksAdmin",
+    "roles/storage.admin",
+    "roles/serviceusage.serviceUsageAdmin",
+    "roles/storage.hmacKeyAdmin"
   ]
 }
 
