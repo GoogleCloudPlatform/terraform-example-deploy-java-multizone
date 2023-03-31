@@ -6,10 +6,11 @@
 
 The resources/services/activations/deletions that this app will create/trigger are:
 
--
--
--
--
+- Compute
+- IAM
+- Service Networking
+- Cloud SQL
+- Secret Manager
 
 ### PreDeploy
 
@@ -40,13 +41,34 @@ The following dependencies must be available:
 A service account with the following roles must be used to provision
 the resources of this module:
 
-
+- roles/cloudsql.admin
+- roles/file.editor
+- roles/iam.serviceAccountUser
+- roles/compute.admin
+- roles/logging.admin
+- roles/monitoring.admin
+- roles/resourcemanager.projectIamAdmin
+- roles/secretmanager.admin
+- roles/iam.serviceAccountAdmin
+- roles/servicenetworking.networksAdmin
+- roles/storage.admin
+- roles/serviceusage.serviceUsageAdmin
+- roles/storage.hmacKeyAdmin
+    
 ### APIs
 
 A project with the following APIs enabled must be used to host the
 resources of this module:
 
-
+- compute.googleapis.com
+- file.googleapis.com
+- iam.googleapis.com
+- servicenetworking.googleapis.com
+- sqladmin.googleapis.com
+- secretmanager.googleapis.com
+- cloudresourcemanager.googleapis.com
+- config.googleapis.com
+    
 ## Contributing
 
 Refer to the [contribution guidelines](CONTRIBUTING.md) for
