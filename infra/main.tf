@@ -47,6 +47,8 @@ module "project_services" {
     "servicenetworking.googleapis.com",
     "sqladmin.googleapis.com",
     "secretmanager.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "config.googleapis.com"
   ]
 }
 
