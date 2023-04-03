@@ -26,7 +26,7 @@ variable "project_id" {
 variable "region" {
   description = "Compute Region to deploy to."
   type        = string
-  default     = "us-west11"
+  default     = "us-west1"
 }
 
 variable "zones" {
