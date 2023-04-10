@@ -17,11 +17,13 @@ variable "project_id" {
 }
 
 variable "region" {
-  type = string
+  type    = string
+  default = "us-west1"
 }
 
 variable "zone" {
-  type = string
+  type    = string
+  default = "us-west1-a"
 }
 
 variable "xwiki_img_name" {
