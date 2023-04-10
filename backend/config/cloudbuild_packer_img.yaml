@@ -36,9 +36,9 @@ steps:
       - -var
       - project_id=$PROJECT_ID
       - -var
-      - region=us-central1
+      - region=$LOCATION
       - -var
-      - zone=us-central1-a
+      - zone=${_ZONE}
       - -var
       - xwiki_img_name=hsa-xwiki-vm-img-latest
       - -var
@@ -60,6 +60,7 @@ steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: "Public Xwiki app image"
     env:
+      - LOCATION=$LOCATION
       - BUILD_ID=$BUILD_ID
     script: |
       gcloud compute images add-iam-policy-binding hsa-xwiki-vm-img-latest --member='allAuthenticatedUsers' --role='roles/compute.imageUser'
