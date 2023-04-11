@@ -26,5 +26,5 @@ output "xwiki_mig_self_link" {
   
 output "neos_walkthrough_url" {
   description = "Neos Tutorial URL"
-  value = "https://console.cloud.google.com/products/solutions/deployments?walkthrough_id=deploy-java-app-gke_tour"
+  value = "https://console.cloud.google.com/products/solutions/deployments?walkthrough_id=solutions-in-console--deploy-java-app-gke_tour"
 }
