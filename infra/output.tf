@@ -23,3 +23,8 @@ output "xwiki_mig_self_link" {
   description = "MIG hosting XWiki"
   value       = module.vm.xwiki_mig.self_link
 }
+  
+output "neos_walkthrough_url" {
+  description = "Neos Tutorial URL"
+  value = "https://console.cloud.google.com/products/solutions/deployments?walkthrough_id=deploy-java-app-gke_tour"
+}
