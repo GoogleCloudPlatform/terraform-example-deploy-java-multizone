@@ -43,7 +43,7 @@ build {
 
   provisioner "file" {
     sources     = [
-      "${var.file_sources_tcp}", 
+      "${var.file_sources_tcp}",
       "${var.file_sources_hibernate}",
       "${var.file_sources_startup_sh}",
       "${var.file_deploy_flavor_sh}",

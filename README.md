@@ -22,7 +22,7 @@ To deploy this blueprint you must have an active billing account and billing per
 
 ## Usage
 
-Basic usage is as follows: 
+Basic usage is as follows:
 
 
 ## Requirements
@@ -54,7 +54,7 @@ the resources of this module:
 - roles/storage.admin
 - roles/serviceusage.serviceUsageAdmin
 - roles/storage.hmacKeyAdmin
-    
+
 ### APIs
 
 A project with the following APIs enabled must be used to host the
@@ -68,7 +68,7 @@ resources of this module:
 - secretmanager.googleapis.com
 - cloudresourcemanager.googleapis.com
 - config.googleapis.com
-    
+
 ## Contributing
 
 Refer to the [contribution guidelines](CONTRIBUTING.md) for
