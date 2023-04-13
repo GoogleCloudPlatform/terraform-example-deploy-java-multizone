@@ -19,7 +19,7 @@ module "instance_template" {
   version = "7.9.0"
 
   name_prefix      = "xwiki-${var.zones[0]}-temp-"
-  machine_type     = "c2-standard-4"
+  machine_type     = "n2-standard-2"
   min_cpu_platform = "Intel Cascade Lake"
   source_image     = "https://www.googleapis.com/compute/beta/projects/${var.xwiki_img_info.image_project}/global/images/${var.xwiki_img_info.image_name}"
   disk_size_gb     = 30
@@ -46,7 +46,7 @@ module "mig" {
   region                    = var.region
   distribution_policy_zones = var.zones
   autoscaling_enabled       = true
-  max_replicas              = 6
+  max_replicas              = 2
   min_replicas              = 2
   cooldown_period           = 120
   autoscaler_name           = "autoscaler"
