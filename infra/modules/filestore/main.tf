@@ -23,7 +23,7 @@ resource "google_filestore_instance" "xwiki" {
     modes   = ["MODE_IPV4"]
   }
   file_shares {
-    capacity_gb = 512
+    capacity_gb = 1024
     name        = "xwiki_file_share"
   }
 }
