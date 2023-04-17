@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.1](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.1.0...v0.1.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* Update int.cloudbuild.yaml to use lower quota billing account ([#33](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/33)) ([663974c](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/663974c72b4a64238fe6ead1fc206991f7dc06e2))
+* Update output.tf to output Neos tutorial url ([#31](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/31)) ([dce8e96](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/dce8e961780490e2e91a703a0bcf088e48c6ad6d))
+* Update README.md ([#26](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/26)) ([1dcfe1e](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/1dcfe1effb6929c4c52a8bff21dc0943cb16d716))
+* Update variables.tf default to us-central1 region and zones (and fix lint and CODEOWNERS issues) ([#32](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/32)) ([7a2ef15](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/7a2ef15c4f0f0532b6830c97bca709e7c5535a8a))
+
 ## 0.1.0 (2023-04-03)
 
 
