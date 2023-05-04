@@ -16,7 +16,7 @@
 
 resource "google_compute_network" "xwiki" {
   provider                = google
-  name                    = "xwiki"
+  name                    = "xwiki-gce"
   auto_create_subnetworks = true
   project                 = var.project_id
 }

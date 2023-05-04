@@ -1,7 +1,7 @@
 {
   "category": "CUSTOM",
   "dashboardFilters": [],
-  "displayName": "Xwiki HSA",
+  "displayName": "Xwiki GCE",
   "labels": {},
   "mosaicLayout": {
     "columns": 12,
