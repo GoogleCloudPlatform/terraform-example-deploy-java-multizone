@@ -97,7 +97,7 @@ module "filestore" {
 data "google_project" "project" {}
 
 resource "google_service_account" "jgroup" {
-  account_id = "xwiki-jgroup"
+  account_id = "xwiki-jgroup-gce"
   depends_on = [
     module.project_services
   ]
@@ -115,7 +115,7 @@ resource "google_storage_hmac_key" "jgroup" {
 
 resource "google_storage_bucket" "xwiki_jgroup" {
   project       = var.project_id
-  name          = "xwiki-jgroup-${data.google_project.project.number}"
+  name          = "xwiki-jgroup-${data.google_project.project.number}-gce"
   location      = var.region
   force_destroy = true
   depends_on = [
