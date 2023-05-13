@@ -3,7 +3,7 @@ module github.com/HSA-Integration/Migrate-Legacy-Java-App-GCE-Basic/infra/test/i
 go 1.18
 
 require (
-	github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.5.0
+	github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.5.1
 	github.com/stretchr/testify v1.8.2
 )
 
@@ -13,8 +13,6 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v0.12.0 // indirect
 	cloud.google.com/go/storage v1.29.0 // indirect
-	github.com/PuerkitoBio/purell v1.2.0 // indirect
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/aws/aws-sdk-go v1.44.216 // indirect
