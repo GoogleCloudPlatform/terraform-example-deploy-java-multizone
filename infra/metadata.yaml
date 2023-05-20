@@ -19,87 +19,104 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 spec:
-  title: XWiki Infrastructure
-  source:
-    repo: https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone.git
-    sourceType: git
-  description:
-    tagline: Sample HSA infrastructure tagline.
-    detailed: Sample HSA infrastructure detailed description.
-    architecture:
-    - Compute Engine
-    - Cloud SQL
-  documentation:
-  - title: Architecture Diagram
-    url: todo
-  subBlueprints:
-  - name: database
-    location: modules/database
-  - name: filestore
-    location: modules/filestore
-  - name: load-balancer
-    location: modules/load-balancer
-  - name: networking
-    location: modules/networking
-  - name: vm
-    location: modules/vm
-  examples:
-  - name: simple_example
-    location: examples/simple_example
-  variables:
-  - name: availability_type
-    description: The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL).
-    type: string
-    default: REGIONAL
-    required: false
-  - name: firewall_source_ranges
-    description: The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format.
-    type: list(string)
-    default:
-    - 130.211.0.0/22
-    - 35.191.0.0/16
-    required: false
-  - name: project_id
-    description: GCP project ID.
-    type: string
-    required: true
-  - name: region
-    description: Compute Region to deploy to.
-    type: string
-    required: true
-  - name: xwiki_img_info
-    description: Xwiki app image information.
-    type: |-
-      object({
-          image_project = string
-          image_name    = string
-        })
-    default:
-      image_name: hsa-xwiki-vm-img-latest
-      image_project: hsa-public
-    required: false
-  - name: zones
-    description: Compute Zones to deploy to.
-    type: list(string)
-    required: true
-  outputs:
-  - name: xwiki_entrypoint_url
-    description: Shows the URL of XWiki's index page.
-  - name: xwiki_mig_self_link
-    description: MIG hosting XWiki
-  roles:
-  - level: Project
+  info:
+    title: XWiki Infrastructure
+    source:
+      repo: https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone
+      sourceType: git
+    description:
+      tagline: Sample HSA infrastructure tagline.
+      detailed: Sample HSA infrastructure detailed description.
+      architecture:
+      - Compute Engine
+      - Cloud SQL
+  content:
+    documentation:
+    - title: Architecture Diagram
+      url: todo
+    subBlueprints:
+    - name: database
+      location: modules/database
+    - name: filestore
+      location: modules/filestore
+    - name: load-balancer
+      location: modules/load-balancer
+    - name: networking
+      location: modules/networking
+    - name: vm
+      location: modules/vm
+    examples:
+    - name: simple_example
+      location: examples/simple_example
+  interfaces:
+    variables:
+    - name: availability_type
+      description: The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL).
+      varType: string
+      defaultValue: REGIONAL
+    - name: firewall_source_ranges
+      description: The firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format.
+      varType: list(string)
+      defaultValue:
+      - 130.211.0.0/22
+      - 35.191.0.0/16
+    - name: project_id
+      description: GCP project ID.
+      varType: string
+      required: true
+    - name: region
+      description: Compute Region to deploy to.
+      varType: string
+      defaultValue: us-central1
+    - name: xwiki_img_info
+      description: Xwiki app image information.
+      varType: |-
+        object({
+            image_project = string
+            image_name    = string
+          })
+      defaultValue:
+        image_name: hsa-xwiki-vm-img-latest
+        image_project: hsa-public
+    - name: zones
+      description: Compute Zones to deploy to.
+      varType: list(string)
+      defaultValue:
+      - us-central1-a
+      - us-central1-b
+    outputs:
+    - name: neos_walkthrough_url
+      description: Neos Tutorial URL
+    - name: xwiki_entrypoint_url
+      description: Shows the URL of XWiki's index page.
+    - name: xwiki_mig_self_link
+      description: MIG hosting XWiki
+  requirements:
     roles:
-    - roles/owner
-  services:
-  - cloudresourcemanager.googleapis.com
-  - iam.googleapis.com
-  - storage.googleapis.com
-  - serviceusage.googleapis.com
-  - compute.googleapis.com
-  - logging.googleapis.com
-  - sqladmin.googleapis.com
-  - cloudbuild.googleapis.com
-  - file.googleapis.com
-  - servicenetworking.googleapis.com
-  - monitoring.googleapis.com
+    - level: Project
+      roles:
+      - roles/cloudsql.admin
+      - roles/file.editor
+      - roles/iam.serviceAccountUser
+      - roles/compute.admin
+      - roles/logging.admin
+      - roles/monitoring.admin
+      - roles/resourcemanager.projectIamAdmin
+      - roles/secretmanager.admin
+      - roles/iam.serviceAccountAdmin
+      - roles/servicenetworking.networksAdmin
+      - roles/storage.admin
+      - roles/serviceusage.serviceUsageAdmin
+      - roles/storage.hmacKeyAdmin
+    services:
+    - cloudresourcemanager.googleapis.com
+    - iam.googleapis.com
+    - storage.googleapis.com
+    - serviceusage.googleapis.com
+    - compute.googleapis.com
+    - logging.googleapis.com
+    - sqladmin.googleapis.com
+    - cloudbuild.googleapis.com
+    - file.googleapis.com
+    - servicenetworking.googleapis.com
+    - monitoring.googleapis.com
