@@ -60,6 +60,11 @@ spec:
       defaultValue:
       - 130.211.0.0/22
       - 35.191.0.0/16
+    - name: labels
+      description: A map of key/value label pairs to assign to the resources.
+      varType: map(string)
+      defaultValue:
+        app: terraform-example-deploy-java-gce
     - name: project_id
       description: GCP project ID.
       varType: string
