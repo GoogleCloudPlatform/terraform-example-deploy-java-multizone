@@ -33,6 +33,7 @@ module "instance_template" {
     scopes = var.service_account.scopes
   }
   startup_script = var.startup_script
+  labels         = var.labels
 }
 
 module "mig" {

@@ -31,6 +31,9 @@ spec:
         firewall_source_ranges:
           name: firewall_source_ranges
           title: Firewall Source Ranges
+        labels:
+          name: labels
+          title: Labels
         project_id:
           name: project_id
           title: Project Id

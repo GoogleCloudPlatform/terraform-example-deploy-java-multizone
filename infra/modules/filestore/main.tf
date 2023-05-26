@@ -18,6 +18,7 @@ resource "google_filestore_instance" "xwiki" {
   name     = "xwiki-${var.zone}-filestore"
   tier     = "BASIC_HDD"
   location = var.zone
+  labels   = var.labels
   networks {
     network = var.private_network_id
     modes   = ["MODE_IPV4"]

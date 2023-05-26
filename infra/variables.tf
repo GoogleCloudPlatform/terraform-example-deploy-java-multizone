@@ -66,3 +66,12 @@ variable "xwiki_img_info" {
     image_name    = "hsa-xwiki-vm-img-latest"
   }
 }
+
+variable "labels" {
+  description = "A map of key/value label pairs to assign to the resources."
+  type        = map(string)
+
+  default = {
+    app = "terraform-example-deploy-java-gce"
+  }
+}
