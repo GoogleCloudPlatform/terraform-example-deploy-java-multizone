@@ -65,3 +65,8 @@ variable "xwiki_img_info" {
     image_project = string
   })
 }
+
+variable "labels" {
+  description = "A map of key/value label pairs to assign to the resources."
+  type        = map(string)
+}

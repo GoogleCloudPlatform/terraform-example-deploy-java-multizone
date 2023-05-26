@@ -88,6 +88,7 @@ module "filestore" {
 
   zone               = local.zones[0]
   private_network_id = module.networking.xwiki_private_network.id
+  labels             = var.labels
 
   depends_on = [
     module.project_services
@@ -117,6 +118,7 @@ resource "google_storage_bucket" "xwiki_jgroup" {
   project       = var.project_id
   name          = "xwiki-jgroup-${data.google_project.project.number}-gce"
   location      = var.region
+  labels        = var.labels
   force_destroy = true
   depends_on = [
     module.project_services
@@ -131,6 +133,7 @@ module "vm" {
   private_network_id = module.networking.xwiki_private_network.id
   xwiki_vm_tag       = local.xwiki_vm_tag
   project_id         = var.project_id
+  labels             = var.labels
   service_account = {
     email = local.vm_sa_email
     scopes = [
