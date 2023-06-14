@@ -16,7 +16,7 @@
 
 module "instance_template" {
   source  = "terraform-google-modules/vm/google///modules/instance_template"
-  version = "7.9.0"
+  version = "8.0.1"
 
   name_prefix      = "xwiki-${var.zones[0]}-temp-"
   machine_type     = "n2-standard-2"
@@ -38,7 +38,7 @@ module "instance_template" {
 
 module "mig" {
   source  = "terraform-google-modules/vm/google//modules/mig"
-  version = "7.9.0"
+  version = "8.0.1"
 
   project_id                = var.project_id
   mig_name                  = "xwiki-${var.region}-group-autoscale"
@@ -53,7 +53,8 @@ module "mig" {
   autoscaler_name           = "autoscaler"
   autoscaling_cpu = [
     {
-      target = 0.5
+      target            = 0.5,
+      predictive_method = null
     },
   ]
   health_check_name = "xwiki-health-check-http-8080"
@@ -70,6 +71,7 @@ module "mig" {
     host                = ""
     initial_delay_sec   = 600
     request_path        = "/xwiki/bin/view/Main"
+    enable_logging      = true
   }
   named_ports = [
     {
