@@ -53,7 +53,7 @@ module "mig" {
   autoscaler_name           = "autoscaler"
   autoscaling_cpu = [
     {
-      target = 0.5,
+      target            = 0.5,
       predictive_method = null
     },
   ]
