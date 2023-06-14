@@ -53,7 +53,8 @@ module "mig" {
   autoscaler_name           = "autoscaler"
   autoscaling_cpu = [
     {
-      target = 0.5
+      target = 0.5,
+      predictive_method = null
     },
   ]
   health_check_name = "xwiki-health-check-http-8080"
@@ -70,6 +71,7 @@ module "mig" {
     host                = ""
     initial_delay_sec   = 600
     request_path        = "/xwiki/bin/view/Main"
+    enable_logging      = true
   }
   named_ports = [
     {
