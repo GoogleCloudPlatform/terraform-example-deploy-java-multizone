@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.1.1...v0.2.0) (2023-07-19)
+
+
+### Features
+
+* generates metadata for the solution ([#41](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/41)) ([24b4f35](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/24b4f358abbfc687a31bcdbc530bfa1af9284347))
+
+
+### Bug Fixes
+
+* clean up outdate tests and docs ([#54](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/54)) ([6d7031d](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/6d7031dec4eade8c2caebbc956b31f316b175bcb))
+* cloud resource naming conflict in Terraform ([#34](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/34)) ([a6aa121](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/a6aa12131cf3e45fbdab11084426a6ba9f33aaec))
+* **deps:** update module github.com/googlecloudplatform/cloud-foundation-toolkit/infra/blueprint-test to v0.5.1 ([#36](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/36)) ([c8540d2](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/c8540d24895b7f86996fdbbed8123ed7a146bc85))
+* **deps:** update module github.com/googlecloudplatform/cloud-foundation-toolkit/infra/blueprint-test to v0.5.2 ([#40](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/40)) ([22b9d12](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/22b9d12f542c248716361c6967267b382670b815))
+* **deps:** update module github.com/googlecloudplatform/cloud-foundation-toolkit/infra/blueprint-test to v0.6.0 ([#51](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/51)) ([8d5dbaa](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/8d5dbaa6e26a7da68449a670a0f0748307fd4a7c))
+* **deps:** update module github.com/googlecloudplatform/cloud-foundation-toolkit/infra/blueprint-test to v0.6.1 ([#52](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/52)) ([e0ff0d0](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/e0ff0d0234e52afe7361e8b0907b5630f9b42ecd))
+* **deps:** update module github.com/stretchr/testify to v1.8.3 ([#42](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/42)) ([508674e](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/508674e74a99c77bf2271bfcd877833ab88adc91))
+* **deps:** update module github.com/stretchr/testify to v1.8.4 ([#44](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/44)) ([7469cfc](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/7469cfcc4be325b780305af446b6ea44aef2971a))
+* setting min not equal to max ([#55](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/55)) ([d574b65](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/d574b651710ef9c4d05c66b29564409f9d392b44))
+* support label injection from metadata ([#43](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/43)) ([8d8b8e2](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/8d8b8e2de3bf0acaaf77cddc90fbd6d025f41dc8))
+* update neos toc url ([#50](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/50)) ([68c4b94](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/68c4b94b71c22136779b9c17b2cd0c1facef924c))
+
 ## [0.1.1](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.1.0...v0.1.1) (2023-04-13)
 
 
