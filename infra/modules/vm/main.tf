@@ -48,7 +48,7 @@ module "mig" {
   distribution_policy_zones = var.zones
   autoscaling_enabled       = true
   max_replicas              = 2
-  min_replicas              = 2
+  min_replicas              = 1
   cooldown_period           = 120
   autoscaler_name           = "autoscaler"
   autoscaling_cpu = [
