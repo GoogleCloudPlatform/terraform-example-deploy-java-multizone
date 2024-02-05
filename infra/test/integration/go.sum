@@ -189,6 +189,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.11.0 h1:VgDItnbULfVKPiWqfGj0f1SpZbaT3LEjHs6Bi36imxI=
 github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.11.0/go.mod h1:pYB95x/fhOwzbo5yp0zTTVE9Haq4B3x1cEzHXVIDpp4=
+github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.11.1 h1:S4Y7o5RKRC9Bk71VszCx9NeheWjdSAn5ejPuD1W6lNE=
+github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.11.1/go.mod h1:v4TFK9TmX4mYyXL3v9wFXVN3A5vrt2LaVDBX2/OVU7Y=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/agext/levenshtein v1.2.3 h1:YB2fHEn0UJagG8T1rrWknE3ZQzWM06O8AMAatNn7lmo=
 github.com/agext/levenshtein v1.2.3/go.mod h1:JEDfjyjHDjOF/1e4FlBE/PkbqA9OfWu2ki2W0IB5558=
