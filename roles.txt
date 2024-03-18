@@ -1,0 +1,14 @@
+roles/cloudsql.admin
+roles/compute.admin
+roles/config.agent
+roles/file.editor
+roles/iam.serviceAccountAdmin
+roles/iam.serviceAccountUser
+roles/logging.admin
+roles/monitoring.admin
+roles/resourcemanager.projectIamAdmin
+roles/secretmanager.admin
+roles/servicenetworking.networksAdmin
+roles/serviceusage.serviceUsageAdmin
+roles/storage.admin
+roles/storage.hmacKeyAdmin
