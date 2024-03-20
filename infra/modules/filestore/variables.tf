@@ -28,3 +28,8 @@ variable "labels" {
   description = "A map of key/value label pairs to assign to the resources."
   type        = map(string)
 }
+
+variable "project_id" {
+  description = "Google Cloud project ID."
+  type        = string
+}

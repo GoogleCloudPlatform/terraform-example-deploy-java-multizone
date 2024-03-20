@@ -20,7 +20,7 @@ resource "google_filestore_instance" "xwiki" {
   location = var.zone
   labels   = var.labels
   networks {
-    network = var.private_network_id
+    network = "projects/${var.project_id}/global/networks/${var.private_network_id}"
     modes   = ["MODE_IPV4"]
   }
   file_shares {

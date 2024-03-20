@@ -89,6 +89,7 @@ module "filestore" {
   zone               = local.zones[0]
   private_network_id = module.networking.xwiki_private_network.id
   labels             = var.labels
+  project_id         = var.project_id
 
   depends_on = [
     module.project_services
