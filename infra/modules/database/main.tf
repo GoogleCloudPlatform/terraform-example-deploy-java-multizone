@@ -72,7 +72,7 @@ resource "google_secret_manager_secret" "sql_password" {
   project   = var.project_id
 
   replication {
-    auto {}
+    automatic = true
   }
 }
 
