@@ -27,4 +27,8 @@ resource "google_filestore_instance" "xwiki" {
     capacity_gb = 1024
     name        = "xwiki_file_share"
   }
+  lifecycle {
+    // See https://github.com/hashicorp/terraform-provider-google/issues/16548
+    ignore_changes = [networks.0.network] 
+  }
 }
