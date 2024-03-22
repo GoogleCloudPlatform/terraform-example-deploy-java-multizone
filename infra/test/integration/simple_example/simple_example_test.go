@@ -29,9 +29,9 @@ func TestSimpleExample(t *testing.T) {
 	example := tft.NewTFBlueprintTest(t)
 
 	example.DefineVerify(func(assert *assert.Assertions) {
-		// default verify reruns plan and asserts no diff
-		//TODO: There seems to be a permadiff with module.simple.google_monitoring_dashboard.dashboard
-		// example.DefaultVerify(assert)
+		// DefaultVerify asserts no resource changes exist after apply.
+		// It helps ensure that a second "terraform apply" wouldn't result in resource deletions/replacements.
+		example.DefaultVerify(assert)
 
 		// check if cloud run service exists
 		projectID := example.GetTFSetupStringOutput("project_id")
