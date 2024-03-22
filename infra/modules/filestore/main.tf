@@ -29,6 +29,6 @@ resource "google_filestore_instance" "xwiki" {
   }
   lifecycle {
     // See https://github.com/hashicorp/terraform-provider-google/issues/16548
-    ignore_changes = [networks.0.network]
+    ignore_changes = [networks[0].network]
   }
 }
