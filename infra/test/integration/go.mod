@@ -2,7 +2,7 @@ module github.com/HSA-Integration/Migrate-Legacy-Java-App-GCE-Basic/infra/test/i
 
 go 1.21
 
-toolchain go1.21.5
+toolchain go1.21.9
 
 require (
 	github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.14.0
