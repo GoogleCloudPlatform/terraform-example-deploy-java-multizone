@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.2.1...v0.3.0) (2024-04-24)
+
+
+### Features
+
+* add support for make it mine and deploy via cloudbuild trigger ([#96](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/96)) ([817a637](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/817a63749f54f796a4918be881eef2a42cd04559))
+
+
+### Bug Fixes
+
+* Bump hashicorp/google provider to 4.84 ([#98](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/98)) ([d9e3e02](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/d9e3e02928cec360bcda36883ac52d91c75c86d7))
+* **deps:** update module github.com/googlecloudplatform/cloud-foundation-toolkit/infra/blueprint-test to v0.8.1 ([#59](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/59)) ([a0cc4a1](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/a0cc4a1d17be1e18a39952a3527dd44bde8a534a))
+* Use ignore_changes for google_filestore_instance ([#100](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/100)) ([060fe15](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/060fe152950bf572c009c8568d8740906de81c8a))
+* Use verbose string for Filestore network ([#97](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/97)) ([7b255fc](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/7b255fc0717b9c0536e46582663f2477df284a59))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.1.1...v0.2.0) (2023-07-19)
 
 
