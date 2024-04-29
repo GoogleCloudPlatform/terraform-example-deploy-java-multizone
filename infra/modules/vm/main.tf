@@ -16,7 +16,7 @@
 
 module "instance_template" {
   source  = "terraform-google-modules/vm/google///modules/instance_template"
-  version = "8.0.1"
+  version = "11.1.0"
 
   name_prefix      = "xwiki-${var.zones[0]}-temp-"
   machine_type     = "n2-standard-2"
@@ -38,7 +38,7 @@ module "instance_template" {
 
 module "mig" {
   source  = "terraform-google-modules/vm/google//modules/mig"
-  version = "8.0.1"
+  version = "11.1.0"
 
   project_id                = var.project_id
   mig_name                  = "xwiki-${var.region}-group-autoscale"
