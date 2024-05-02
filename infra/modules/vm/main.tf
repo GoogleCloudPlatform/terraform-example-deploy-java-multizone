@@ -18,6 +18,7 @@ module "instance_template" {
   source  = "terraform-google-modules/vm/google///modules/instance_template"
   version = "11.1.0"
 
+  project_id       = var.project_id
   name_prefix      = "xwiki-${var.zones[0]}-temp-"
   machine_type     = "n2-standard-2"
   min_cpu_platform = "Intel Cascade Lake"
