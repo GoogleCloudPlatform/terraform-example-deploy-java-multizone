@@ -35,7 +35,7 @@ data "google_compute_zones" "available" {
 
 module "project_services" {
   source  = "terraform-google-modules/project-factory/google//modules/project_services"
-  version = "~> 14.0"
+  version = "~> 15.0"
 
   disable_services_on_destroy = false
   project_id                  = var.project_id
