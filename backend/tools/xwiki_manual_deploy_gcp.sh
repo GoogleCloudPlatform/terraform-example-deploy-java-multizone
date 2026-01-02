@@ -50,7 +50,7 @@ if [ -z "${XWIKI_MIGRATE_FILE_BUCKET}" ]; then
   XWIKI_MIGRATE_FILE_BUCKET="legacy-xwiki-installed-flavor"
 fi
 
-gsutil -m cp \
+gcloud storage cp \
   "gs://$XWIKI_MIGRATE_FILE_BUCKET/xwiki_14.10.4_flavor/extension_14.10.4.tar.gz" \
   "gs://$XWIKI_MIGRATE_FILE_BUCKET/xwiki_14.10.4_flavor/file_14.10.4.tar.gz" \
   "gs://$XWIKI_MIGRATE_FILE_BUCKET/xwiki_14.10.4_flavor/xwiki_mysql_db_bk_14.10.4.tar.gz" \
