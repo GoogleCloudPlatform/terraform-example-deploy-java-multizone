@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.3.0...v0.3.1) (2026-09-08)
+
+
+### Bug Fixes
+
+* Migrate gsutil usage to gcloud storage ([#148](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/issues/148)) ([8cbede5](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/commit/8cbede5fc20f6a51c78b8f38c51cd32793f32e21))
+
 ## [0.3.0](https://github.com/GoogleCloudPlatform/terraform-example-deploy-java-multizone/compare/v0.2.1...v0.3.0) (2024-04-24)
 
 
